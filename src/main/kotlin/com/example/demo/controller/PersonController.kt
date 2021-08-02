@@ -1,16 +1,15 @@
 package com.example.demo.controller
 
-import com.example.demo.model.PersonModel
-import com.example.demo.model.PhoneNumber
+import com.example.demo.model.User
 import com.example.demo.view.Person
 import javafx.collections.FXCollections
 import tornadofx.*
 
 class PersonController : Controller() {
-    val persons = FXCollections.observableArrayList<Person>()
+    var users = FXCollections.observableArrayList<User>()
 
     init {
-        // Add some test persons for the demo
-        persons.add(Person("", ""))
+        users.plusAssign(User("bob", "1234"))
+        users.plusAssign(User("jack", "1234"))
     }
 }
