@@ -1,7 +1,6 @@
 package com.example.demo.view
 
 import com.example.demo.app.Styles
-import com.example.demo.app.Styles.Companion.content
 import com.example.demo.app.Styles.Companion.topbar
 import tornadofx.*
 
@@ -26,7 +25,7 @@ class TopBar : Fragment() {
                  isDefaultButton = true
                  addClass(Styles.navButton)
                  action {
-                     find(UserView::class).openWindow()
+                     find(MainView::class).replaceWith(StaffPage::class, sizeToScene = true, centerOnScreen = true)
                  }
              }
              button("Salaries"){
@@ -37,7 +36,7 @@ class TopBar : Fragment() {
                  isDefaultButton = true
                  addClass(Styles.successButton)
                  action {
-                     find(LoginScreen::class).openWindow()
+                     find(MainView::class).replaceWith(LoginScreen::class, sizeToScene = true, centerOnScreen = true)
                  }
              }
 

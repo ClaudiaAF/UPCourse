@@ -15,7 +15,6 @@ import com.example.demo.app.Styles.Companion.successButton
 import com.example.demo.app.Styles.Companion.userinfo
 import com.example.demo.app.Styles.Companion.userscreen
 import com.example.demo.controller.PersonController
-import com.example.demo.model.Repo
 import com.example.demo.model.User
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
 import javafx.geometry.Insets
@@ -51,19 +50,10 @@ class MainView : View("User Screen") {
 
         center = hbox {
             addClass(Styles.rowWrapper)
-            tableViews()
             chartView()
         }
     }
 
-    fun HBox.tableViews() = tableview(controller.persons) {
-        column("Student Name", Person::nameProperty)
-        column("Enrolment", Person::nameProperty)
-        column("Invoice nr.", Person::nameProperty)
-        column("Status", Person::nameProperty)
-        column("Amount", Person::nameProperty)
-        smartResize()
-    }
 
     fun HBox.chartView() = gridpane(){
         row {
