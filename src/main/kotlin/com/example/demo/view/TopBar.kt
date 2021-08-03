@@ -30,14 +30,13 @@ class TopBar : Fragment() {
                      find(MainView::class).replaceWith(StaffPage::class, sizeToScene = true, centerOnScreen = true)
                  }
              }
-             button("Lecturer Salaries"){
-                 isDefaultButton = true
-                 addClass(Styles.navButton)
-             }
 
-             button("Administrative Salaries"){
+             button("Salaries"){
                  isDefaultButton = true
                  addClass(Styles.navButton)
+                 action {
+                     find(MainView::class).replaceWith(SalariesPage::class, sizeToScene = true, centerOnScreen = true)
+                 }
              }
 
              spacer()
