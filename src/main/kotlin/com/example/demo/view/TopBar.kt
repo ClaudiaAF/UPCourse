@@ -19,7 +19,9 @@ class TopBar : Fragment() {
              button("Courses"){
                  isDefaultButton = true
                  addClass(Styles.navButton)
-
+                 action {
+                     find(MainView::class).replaceWith(CoursesPage::class, sizeToScene = true, centerOnScreen = true)
+                 }
              }
              button("Staff"){
                  isDefaultButton = true
@@ -28,10 +30,17 @@ class TopBar : Fragment() {
                      find(MainView::class).replaceWith(StaffPage::class, sizeToScene = true, centerOnScreen = true)
                  }
              }
-             button("Salaries"){
+             button("Lecturer Salaries"){
                  isDefaultButton = true
                  addClass(Styles.navButton)
              }
+
+             button("Administrative Salaries"){
+                 isDefaultButton = true
+                 addClass(Styles.navButton)
+             }
+
+             spacer()
              button("Sign out") {
                  isDefaultButton = true
                  addClass(Styles.successButton)

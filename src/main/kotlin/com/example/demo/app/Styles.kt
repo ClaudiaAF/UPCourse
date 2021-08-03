@@ -402,9 +402,6 @@ class Styles : Stylesheet() {
             and(pressed) {
                 backgroundColor += c("#569e3d")
             }
-            icon {
-                backgroundColor += Color.WHITE
-            }
         }
 
         navButton {

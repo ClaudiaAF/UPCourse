@@ -50,7 +50,7 @@ class LoginScreen : View("Sign in to GitHub") {
                 isDefaultButton = true
                 addClass(successButton)
                 action {
-                    replaceWith<MainView>()
+                    find(LoginScreen::class).replaceWith(MainView::class, sizeToScene = true, centerOnScreen = true)
                 }
             }
         }

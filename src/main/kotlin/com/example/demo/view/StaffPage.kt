@@ -8,15 +8,16 @@ class StaffPage: View("Staff") {
 
     override val root = borderpane {
         addClass(Styles.userscreen, Styles.defaultSpacing, Styles.defaultContentPadding)
-        top = vbox {
+        top = hbox {
+            this += SearchView::class
+            spacer()
             addClass(Styles.rowWrapper)
-            button("Go Back", javafx.scene.control.Label().addClass(Styles.commentIcon, Styles.icon)) {
+            button("Go Back") {
                 addClass(Styles.successButton)
                 action {
                     find(StaffPage::class).replaceWith(MainView::class, sizeToScene = true, centerOnScreen = true)
                 }
             }
-            spacer()
         }
 
         center = hbox {
