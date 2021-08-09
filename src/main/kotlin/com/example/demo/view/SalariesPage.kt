@@ -32,8 +32,8 @@ class SalariesPage: View("Salaries") {
     }
 
     fun HBox.SalariesView() = hbox {
-        label("Administrative")
-        label("Lecturers")
+        this += SalariesLecturers::class
+        this += SalariesAdmin::class
         addClass(Styles.defaultSpacing)
     }
 }

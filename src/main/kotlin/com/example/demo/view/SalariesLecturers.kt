@@ -1,5 +1,6 @@
 package com.example.demo.view
 
+import com.example.demo.app.Styles
 import com.example.demo.controller.SalariesAdminController
 import com.example.demo.controller.SalariesLecturerController
 import com.example.demo.model.Salaries
@@ -21,6 +22,8 @@ class SalariesLecturers : View("Lecturer Salaries") {
 
         columnResizePolicy = SmartResize.POLICY
 
-
+        button("Pay Off") {
+            addClass(Styles.successButton)
+        }
     }
 }
