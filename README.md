@@ -29,15 +29,15 @@
 <br />
 <p align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://user-images.githubusercontent.com/64257497/128886461-e4b3f0ff-5bf0-4980-8c09-1afa40973fce.png" alt="Logo" width="100" height="100">
   </a>
 
-  <h3 align="center">RONA</h3>
+  <h3 align="center">UPCourse</h3>
 
   <p align="center">
-    Covid-19 Screening
+    School Management Application
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ClaudiaaAF/UPCourse"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
@@ -83,16 +83,15 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
+UPCourse is a desktop application which serves aa an administration portal for universities and colleges.
 
 
 ### Built With
 
-* []()
-* []()
-* []()
+* [TornadoFX]()
+* [IntelliJ IDEA Community Edition]()
+* [Maven]()
+* [Kotlin]()
 
 
 
@@ -103,40 +102,35 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+1. Install the TornadoFX Plugin in order for the project to succesfully run.
+2. Make sure you have Kotlin configured in your project as well.
 
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/ClaudiaAF/UPCourse.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
+2. Open the project in IntelliJ and configure Kotlin & TornadoFX
+   
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+In UPCourse, the user is able to manage a university portal system. This includes the following features:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
+1. Viewing all available courses
+2. Enrolling students to a course
+3. Adding new lecturers
+4. Adding new students
+5. Editing lecturers and Students information
+6. Money Pool
+7. Pay Staff Salaries 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
-
-
+See the [open issues](https://github.com/ClaudiaAF/UPCourse/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -161,21 +155,17 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Claudia Ferreira - Email: 180181@virtualwindow.co.za
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/ClaudiaAF/UPCourse](https://github.com/ClaudiaAF/UPCourse)
 
 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
-* []()
-
-
-
+* [TornadoFX Documentation]()
+* Christof Enslin (Lecturer)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
