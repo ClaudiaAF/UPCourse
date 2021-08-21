@@ -1,12 +1,5 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
-import com.example.demo.app.Styles.Companion.errorMessage
-import com.example.demo.app.Styles.Companion.footer
-import com.example.demo.app.Styles.Companion.h1
-import com.example.demo.app.Styles.Companion.loginScreen
-import com.example.demo.app.Styles.Companion.newToGitHub
-import com.example.demo.app.Styles.Companion.successButton
 import com.example.demo.controller.LoginController
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -27,7 +20,6 @@ class LoginScreen : View("Sign in to GitHub") {
     val passwordField by cssid()
 
     override val root = vbox {
-        addClass(loginScreen)
 
 //        label().addClass(Styles.logoIcon, Styles.icon, Styles.large)
 //        label(title).addClass(h1)
@@ -48,7 +40,6 @@ class LoginScreen : View("Sign in to GitHub") {
 
             button("Sign in") {
                 isDefaultButton = true
-                addClass(successButton)
                 action {
                     find(LoginScreen::class).replaceWith(MainView::class, sizeToScene = true, centerOnScreen = true)
                 }
@@ -56,7 +47,6 @@ class LoginScreen : View("Sign in to GitHub") {
         }
 
         hbox {
-            addClass(footer)
             label("UPcourse Application")
         }
     }
@@ -79,11 +69,9 @@ class LoginScreen : View("Sign in to GitHub") {
     private fun loginFailed() {
         root.select<StackPane>(messageWrapper).replaceChildren {
             hbox {
-                addClass(errorMessage)
                 label("Incorrect username or password.")
                 spacer()
                 button {
-                    addClass(Styles.crossIcon, Styles.icon, Styles.small)
                     action {
                         this@hbox.removeFromParent()
                     }

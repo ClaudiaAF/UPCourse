@@ -1,23 +1,24 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
+import com.example.demo.controller.PersonController
 import com.example.demo.model.User
 import com.example.demo.model.UserModel
 import javafx.geometry.Insets
 import javafx.scene.control.Alert
+import javafx.scene.control.TextField
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
 import tornadofx.*
 
 class UserView : View("User Screen") {
-    val model : UserModel by inject()
+    val personController : PersonController by inject()
+    var usernameField : TextField by singleAssign()
+    var passwordField : TextField by singleAssign()
 
     override val root = vbox {
-        addClass(Styles.detail, Styles.defaultSpacing, Styles.defaultContentPadding)
         hbox {
             label("Info") {
-                addClass(Styles.h2)
-                graphic = label().addClass(Styles.repoIcon, Styles.icon)
+                graphic = label()
             }
 
 
@@ -25,21 +26,25 @@ class UserView : View("User Screen") {
         form {
             fieldset("Personal Information") {
                 field("Name") {
-                    textfield(model.username)
+                    textfield {
+                        usernameField = this
+                    }
                 }
 
                 field("Surname") {
-                    textfield(model.password)
+                    textfield{
+                        passwordField = this
+                    }
                 }
             }
 
 
-            button("Save") {
+            button("Add User") {
                 action {
-                    model.commit()
+                    personController.addUser(usernameField.text, passwordField.text)
+                    usernameField.text = ""
+                    passwordField.text = ""
                 }
-
-                enableWhen(model.valid)
             }
         }
 

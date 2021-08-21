@@ -1,26 +1,57 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
 import com.example.demo.controller.PersonController
 import com.example.demo.model.User
 import com.example.demo.model.UserModel
+import javafx.collections.ObservableList
 import javafx.scene.layout.HBox
 import tornadofx.*
 
 class StaffTable: View ("Staff") {
-    val personController: PersonController by inject()
-    val model: UserModel by inject()
+        val personController: PersonController by inject()
+        var userTable : TableViewEditModel<UserModel> by singleAssign()
+        var users : ObservableList<UserModel> by singleAssign()
 
+        override val root = borderpane {
+            users = personController.users
 
-    override val root = tableview(personController.users) {
+            center = vbox {
+                buttonbar {
+                    button ("Delete Selected User") {
+                        action {
+                            val model = userTable.tableView.selectedItem
+                            when (model) {
+                                null -> return@action
+                                else -> personController.deleteUser(model)
+                            }
+                        }
+                    }
 
-        column("Username", User::usernameProperty)
-        column("Password", User::passwordProperty)
+                    button ("Commit"){
+                        action {
+                            personController.commitDirty(userTable.items.asSequence())
+                        }
+                    }
 
-        columnResizePolicy = SmartResize.POLICY
+                    button ("Rollback") {
+                        action {
+                            userTable.rollback()
+                        }
+                    }
+                }
+            }
 
-        bindSelected(model)
+            center = tableview<UserModel> {
+                userTable = editModel
+                items = users
 
+                enableCellEditing()
+                enableDirtyTracking()
 
+                column("username", UserModel::username)
+                column("password", UserModel::password)
+
+                columnResizePolicy = SmartResize.POLICY
+            }
+        }
     }
-}

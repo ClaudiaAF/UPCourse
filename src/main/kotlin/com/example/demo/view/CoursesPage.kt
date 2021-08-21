@@ -1,7 +1,5 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
-import com.example.demo.app.Styles.Companion.defaultContentPadding
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
@@ -19,13 +17,9 @@ class CoursesPage : View("Courses") {
         prefWidth = 1000.0
         prefHeight = 600.0
         top = hbox {
-            label("Subjects"){
-                addClass(Styles.h1, defaultContentPadding)
-            }
+            label("Subjects")
             spacer()
-            addClass(Styles.rowWrapper)
             button("Go Back") {
-                addClass(Styles.successButton, defaultContentPadding)
                 action {
                     find(CoursesPage::class).replaceWith(MainView::class, sizeToScene = true, centerOnScreen = true)
                 }
@@ -53,7 +47,6 @@ class CoursesPage : View("Courses") {
                     alignment = Pos.CENTER
                 }
                 label(it) {
-                    addClass(Styles.defaultContentPadding)
                     alignment = Pos.CENTER
                 }
                 label()

@@ -1,21 +1,9 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
-import com.example.demo.app.Styles.Companion.borderLineColor
-import com.example.demo.app.Styles.Companion.darkTextColor
-import com.example.demo.app.Styles.Companion.defaultContentPadding
-import com.example.demo.app.Styles.Companion.defaultSpacing
-import com.example.demo.app.Styles.Companion.detail
-import com.example.demo.app.Styles.Companion.h1
-import com.example.demo.app.Styles.Companion.h2
-import com.example.demo.app.Styles.Companion.regularTable
-import com.example.demo.app.Styles.Companion.rowWrapper
-import com.example.demo.app.Styles.Companion.stat
-import com.example.demo.app.Styles.Companion.successButton
-import com.example.demo.app.Styles.Companion.userinfo
-import com.example.demo.app.Styles.Companion.userscreen
+import Styles.Companion.h1
 import com.example.demo.controller.PersonController
 import com.example.demo.model.User
+import com.example.demo.view.TopBar
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -59,18 +47,18 @@ class MainView : View("User Screen") {
         row {
 
         }
-         row {
-             linechart("linechart", CategoryAxis(), NumberAxis()) {
-                 series("month") {
-                     data("jan", 10)
-                     data("feb", 20)
-                     data("mar", 5)
-                 }
-                 series("week") {
-                     data("jan", 1)
-                     data("feb", 2)
-                 }
-             }
-         }
+        row {
+            linechart("linechart", CategoryAxis(), NumberAxis()) {
+                series("month") {
+                    data("jan", 10)
+                    data("feb", 20)
+                    data("mar", 5)
+                }
+                series("week") {
+                    data("jan", 1)
+                    data("feb", 2)
+                }
+            }
+        }
     }
 }

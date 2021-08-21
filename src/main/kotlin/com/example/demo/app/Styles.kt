@@ -1,5 +1,3 @@
-package com.example.demo.app
-
 import javafx.geometry.Pos
 import javafx.scene.Cursor
 import javafx.scene.paint.Color

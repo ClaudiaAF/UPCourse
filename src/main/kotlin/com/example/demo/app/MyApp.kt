@@ -1,5 +1,6 @@
 package com.example.demo.app
 
+import Styles
 import com.example.demo.view.LoginScreen
 import com.example.demo.view.MainView
 import javafx.stage.Stage

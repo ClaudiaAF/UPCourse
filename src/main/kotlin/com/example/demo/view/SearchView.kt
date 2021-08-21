@@ -1,6 +1,5 @@
 package com.example.demo.view
 
-import com.example.demo.app.Styles
 import tornadofx.*
 
 class SearchView : View("search") {
@@ -21,7 +20,6 @@ class SearchView : View("search") {
             }
 
             button("Search") {
-                addClass(Styles.successButton)
                 action {
                 }
             }
