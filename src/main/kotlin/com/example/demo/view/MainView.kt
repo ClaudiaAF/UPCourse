@@ -12,7 +12,6 @@ class MainView : View("User Screen") {
     override val root = borderpane {
         top = vbox {
             addClass(Styles.rowWrapper)
-            add(TopBar::class)
             padding = Insets(10.0, 0.0, 10.0, 0.0)
             spacing = 6.0
             label("Dashboard").addClass(h1)
