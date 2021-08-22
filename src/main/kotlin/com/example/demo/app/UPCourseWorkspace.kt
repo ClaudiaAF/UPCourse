@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.insert
 import tornadofx.*
 import java.time.LocalDate
 import com.example.demo.util.toDate
+import com.example.demo.view.AdminView
 import com.example.demo.view.DegreeStudentsView
 import com.example.demo.view.DiplomaStudentsView
 import com.example.demo.view.EditView
@@ -34,6 +35,7 @@ class UPCourseWorkspace : Workspace("UPCourse", NavigationMode.Tabs) {
         dock<EditView>()
         dock<DegreeStudentsView>()
         dock<DiplomaStudentsView>()
+        dock<AdminView>()
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }

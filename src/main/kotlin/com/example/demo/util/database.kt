@@ -1,5 +1,6 @@
 package com.example.demo.util
 
+import com.example.demo.model.AdminStaffTbl
 import com.example.demo.model.DegreeStudentsTbl
 import com.example.demo.model.DiplomaStudentsTbl
 import com.example.demo.model.ExpensesEntryTbl
@@ -9,6 +10,7 @@ import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import java.sql.Connection
+import javax.xml.validation.Schema
 
 private var LOG_TO_CONSOLE: Boolean = false
 
@@ -27,6 +29,7 @@ fun createTables() {
         SchemaUtils.create(ExpensesEntryTbl)
         SchemaUtils.create(DegreeStudentsTbl)
         SchemaUtils.create(DiplomaStudentsTbl)
+        SchemaUtils.create(AdminStaffTbl)
     }
 }
 
