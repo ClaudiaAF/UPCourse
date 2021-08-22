@@ -7,6 +7,7 @@ import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import java.sql.Connection
+import javax.security.auth.Subject
 import javax.xml.validation.Schema
 
 private var LOG_TO_CONSOLE: Boolean = false
@@ -28,6 +29,7 @@ fun createTables() {
         SchemaUtils.create(DiplomaStudentsTbl)
         SchemaUtils.create(AdminStaffTbl)
         SchemaUtils.create(LecturerStaffTbl)
+        SchemaUtils.create(SubjectsTbl)
     }
 }
 
