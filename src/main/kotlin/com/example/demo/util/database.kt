@@ -1,9 +1,6 @@
 package com.example.demo.util
 
-import com.example.demo.model.AdminStaffTbl
-import com.example.demo.model.DegreeStudentsTbl
-import com.example.demo.model.DiplomaStudentsTbl
-import com.example.demo.model.ExpensesEntryTbl
+import com.example.demo.model.*
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Transaction
@@ -30,6 +27,7 @@ fun createTables() {
         SchemaUtils.create(DegreeStudentsTbl)
         SchemaUtils.create(DiplomaStudentsTbl)
         SchemaUtils.create(AdminStaffTbl)
+        SchemaUtils.create(LecturerStaffTbl)
     }
 }
 

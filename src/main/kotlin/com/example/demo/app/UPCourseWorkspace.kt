@@ -11,10 +11,7 @@ import org.jetbrains.exposed.sql.insert
 import tornadofx.*
 import java.time.LocalDate
 import com.example.demo.util.toDate
-import com.example.demo.view.AdminView
-import com.example.demo.view.DegreeStudentsView
-import com.example.demo.view.DiplomaStudentsView
-import com.example.demo.view.EditView
+import com.example.demo.view.*
 import org.joda.time.DateTime
 import java.math.BigDecimal
 
@@ -36,6 +33,7 @@ class UPCourseWorkspace : Workspace("UPCourse", NavigationMode.Tabs) {
         dock<DegreeStudentsView>()
         dock<DiplomaStudentsView>()
         dock<AdminView>()
+        dock<LecturerView>()
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
