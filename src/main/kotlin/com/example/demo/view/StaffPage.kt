@@ -16,13 +16,6 @@ class StaffPage: View("Staff") {
             }
         }
 
-        center = hbox {
-            StaffView()
-        }
     }
 
-    fun HBox.StaffView() = hbox {
-
-        this += UserView::class
-    }
 }

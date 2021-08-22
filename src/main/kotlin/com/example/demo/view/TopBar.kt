@@ -14,9 +14,6 @@ class TopBar : Fragment() {
             button("Fees"){
                 isDefaultButton = true
                 addClass(Styles.navButton)
-                action {
-                    find(MainView::class).replaceWith(StaffTable::class, sizeToScene = true, centerOnScreen = true)
-                }
             }
             button("Courses"){
                 isDefaultButton = true
