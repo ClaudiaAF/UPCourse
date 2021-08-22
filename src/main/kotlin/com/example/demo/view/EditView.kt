@@ -23,9 +23,9 @@ class EditView : View("Person Editor") {
     var totalExpensesLabel: Label by singleAssign()
     val totalExpensesProperty = SimpleDoubleProperty(0.0)
 
-//    init {
-//        updateTotalExpenses()
-//    }
+    init {
+        updateTotalExpenses()
+    }
 
     override val root = borderpane {
 
@@ -108,7 +108,7 @@ class EditView : View("Person Editor") {
                                     totalExpensesProperty.value = diff
 
                                     controller.delete(selectedItem)
-//                                    updateTotalExpenses()
+                                    updateTotalExpenses()
                                 }
                             }
                             controller.delete(selectedItem!!)
@@ -145,38 +145,39 @@ class EditView : View("Person Editor") {
         right = vbox {
             alignment = Pos.CENTER
 
-            piechart("Total Expenses") {
-                data = controller.pieItemsData
-            }
-
-//            totalExpensesLabel = label {
-//                if (totalExpensesProperty.doubleValue() != 0.0) {
-//                    bind(Bindings.concat("Total expenses: ", "$", Bindings.format("%.2f", totalExpensesProperty)))
-//                } else {
-//
-//                }
+//            piechart("Total Expenses") {
+//                data = controller.pieItemsData
 //            }
+
+            totalExpensesLabel = label {
+                if (totalExpensesProperty.doubleValue() != 0.0) {
+                    bind(Bindings.concat("Total expenses: ", "$", Bindings.format("%.2f", totalExpensesProperty)))
+                } else {
+
+                }
+            }
         }
     }
 
-//    private fun updateTotalExpenses() {
-//        var total = 0.0
-//        try {
-//
-//            controller.items.forEach {
-//                total += it.itemPrice.value.toDouble()
-//            }
-//            totalExpensesProperty.set(total)
-//            model.totalExpenses.value = total
-//
-//        } catch (e:Exception) {
-//            totalExpensesProperty.set(0.0)
-//        }
-//
-//
-//    }
+    private fun updateTotalExpenses() {
+        var total = 0.0
+        try {
+
+            controller.items.forEach {
+                total += it.itemPrice.value.toDouble()
+            }
+            totalExpensesProperty.set(total)
+            model.totalExpenses.value = total
+
+        } catch (e:Exception) {
+            totalExpensesProperty.set(0.0)
+        }
+
+
+    }
     private fun addItem() {
         controller.add(model.entryDate.value, model.itemName.value, model.itemPrice.value.toDouble())
 
+        updateTotalExpenses()
     }
 }

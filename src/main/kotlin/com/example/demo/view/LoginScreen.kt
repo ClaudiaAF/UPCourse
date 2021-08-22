@@ -1,17 +1,9 @@
 package com.example.demo.view
 
-import com.example.demo.controller.LoginController
-import javafx.animation.KeyFrame
-import javafx.animation.Timeline
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.event.EventHandler
 import javafx.geometry.Orientation
 import javafx.scene.control.Button
 import javafx.scene.control.PasswordField
 import javafx.scene.layout.StackPane
-import javafx.util.Duration
-import sun.applet.Main
 import tornadofx.*
 
 class LoginScreen : View("Sign in to GitHub") {

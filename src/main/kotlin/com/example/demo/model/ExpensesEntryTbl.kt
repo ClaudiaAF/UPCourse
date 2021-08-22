@@ -1,29 +1,15 @@
 package com.example.demo.model
 
-import com.example.demo.model.ExpensesEntryTbl.entryDate
-import com.example.demo.util.toJavaLocalDate
-import com.sun.java.accessibility.util.GUIInitializedMulticaster.add
-import com.sun.java.accessibility.util.TopLevelWindowMulticaster.add
-import com.sun.javafx.animation.TickCalculation.add
-import com.sun.javafx.fxml.expression.Expression.add
-import javafx.beans.binding.Bindings.add
-import javafx.beans.binding.NumberBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
-import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import sun.applet.AppletEventMulticaster.add
-import sun.misc.ClassFileTransformer.add
-import sun.security.jca.ProviderList.add
 import java.math.BigDecimal
 import tornadofx.*
-import java.awt.AWTEventMulticaster.add
 import javax.script.Bindings
+import javafx.beans.binding.Bindings.add
 
 object ExpensesEntryTbl : Table() {
     val id: Column<Int> = integer("id").autoIncrement().primaryKey()
@@ -53,7 +39,7 @@ class ExpensesEntry(id: Int, entryDate: String, itemName: String, itemPrice: Dou
     val itemPriceProperty = SimpleDoubleProperty(itemPrice)
     var itemPrice by itemPriceProperty
 
-//    var totalExpenses = Bindings.add
+    var totalExpenses = javafx.beans.binding.Bindings.add(itemPriceProperty, 0)
 
     //returning string for when object is added
     override fun toString(): String {
@@ -68,5 +54,5 @@ class ExpensesEntryModel : ItemViewModel<ExpensesEntry>() {
     val entryDate = bind { item?.entryDateProperty }
     val itemName = bind { item?.itemNameProperty }
     val itemPrice = bind { item?.itemPriceProperty }
-//    var totalExpenses = itemProperty.select (ExpensesEntry::totalExpenses)
+    var totalExpenses = itemProperty.select (ExpensesEntry::totalExpenses)
 }
