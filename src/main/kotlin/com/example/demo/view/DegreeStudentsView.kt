@@ -1,10 +1,13 @@
 package com.example.demo.view
 
 import com.example.demo.controller.DegreeStudentController
+import com.example.demo.controller.SubjectsController
 import com.example.demo.model.DegreeStudentsEntryModel
 import com.example.demo.model.ExpensesEntryModel
+import com.example.demo.model.SubjectsEntryModel
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
@@ -21,6 +24,9 @@ class DegreeStudentsView : View("Degree Students") {
 
     var model = DegreeStudentsEntryModel()
     val controller: DegreeStudentController by inject()
+
+    val subjectController: SubjectsController by inject()
+    val boxObject = SimpleObjectProperty<SubjectsEntryModel>()
 
     var mTableView: TableViewEditModel<DegreeStudentsEntryModel> by singleAssign()
     var totalFeesLabel: Label by singleAssign()
@@ -63,6 +69,25 @@ class DegreeStudentsView : View("Degree Students") {
                         }
                     }
                 }
+
+                    fieldset {
+                        field {
+                            text = "Subject"
+                            combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+                                cellFormat {
+                                    text = this.item.subjectName.value
+                                    bind(model.degreeStudentSubject)
+                                    if (item.subjectCredits > 20) {
+
+                                        error("Please choose a Degree Subject")
+
+                                    } else {
+                                        //do nothing
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                 fieldset {
                     field("Student Number") {
@@ -142,6 +167,7 @@ class DegreeStudentsView : View("Degree Students") {
                         column("ID", DegreeStudentsEntryModel::degreeStudentId)
                         column("Name", DegreeStudentsEntryModel::degreeStudentName).makeEditable()
                         column("Surname", DegreeStudentsEntryModel::degreeStudentSurname).makeEditable()
+                        column("Subject", DegreeStudentsEntryModel::degreeStudentSubject).makeEditable()
                         column("Student Number", DegreeStudentsEntryModel::degreeStudentNumber).makeEditable()
 
                         onEditCommit {
@@ -186,7 +212,7 @@ class DegreeStudentsView : View("Degree Students") {
     }
 
     private fun addItem() {
-        controller.add(model.degreeStudentName.value, model.degreeStudentSurname.value, model.degreeStudentNumber.value, model.degreeStudentFees.value.toDouble())
+        controller.add(model.degreeStudentName.value, model.degreeStudentSurname.value, model.degreeStudentSubject.value, model.degreeStudentNumber.value, model.degreeStudentFees.value.toDouble())
 
         updateTotalFees()
     }

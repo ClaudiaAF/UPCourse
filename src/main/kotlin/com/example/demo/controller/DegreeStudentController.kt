@@ -30,11 +30,12 @@ class DegreeStudentController : Controller() {
     }
 
 
-    fun add(newDegreeStudentName: String, newDegreeStudentSurname: String, newDegreeStudentNumber: Int, newDegreeStudentFees: Double) : DegreeStudentsEntry {
+    fun add(newDegreeStudentName: String, newDegreeStudentSurname: String, newDegreeStudentSubject: String, newDegreeStudentNumber: Int, newDegreeStudentFees: Double) : DegreeStudentsEntry {
         val newEntry = execute {
             DegreeStudentsTbl.insert {
                 it[degreeStudentName] = newDegreeStudentName
                 it[degreeStudentSurname] = newDegreeStudentSurname
+                it[degreeStudentSubject] = newDegreeStudentSubject
                 it[degreeStudentNumber] = newDegreeStudentNumber
                 it[degreeStudentFees] = BigDecimal.valueOf(newDegreeStudentFees)
             }
@@ -42,10 +43,10 @@ class DegreeStudentController : Controller() {
 
         listOfDegreeStudents.add(
             DegreeStudentsEntryModel().apply {
-                item = DegreeStudentsEntry(newEntry[DegreeStudentsTbl.degreeStudentId], newDegreeStudentName, newDegreeStudentSurname, newDegreeStudentNumber, newDegreeStudentFees)
+                item = DegreeStudentsEntry(newEntry[DegreeStudentsTbl.degreeStudentId], newDegreeStudentName, newDegreeStudentSurname, newDegreeStudentSubject, newDegreeStudentNumber, newDegreeStudentFees)
             }
         )
-        return DegreeStudentsEntry(newEntry[DegreeStudentsTbl.degreeStudentId], newDegreeStudentName, newDegreeStudentSurname, newDegreeStudentNumber, newDegreeStudentFees)
+        return DegreeStudentsEntry(newEntry[DegreeStudentsTbl.degreeStudentId], newDegreeStudentName, newDegreeStudentSurname, newDegreeStudentSubject, newDegreeStudentNumber, newDegreeStudentFees)
     }
 
     fun update(updatedItem: DegreeStudentsEntryModel): Int {
@@ -53,6 +54,7 @@ class DegreeStudentController : Controller() {
             DegreeStudentsTbl.update ({ DegreeStudentsTbl.degreeStudentId eq(updatedItem.degreeStudentId.value.toInt()) }) {
                 it[degreeStudentName] = updatedItem.degreeStudentName.value
                 it[degreeStudentSurname] = updatedItem.degreeStudentSurname.value
+                it[degreeStudentSubject] = updatedItem.degreeStudentSubject.value
                 it[degreeStudentNumber] = updatedItem.degreeStudentNumber.value
                 it[degreeStudentFees] = BigDecimal.valueOf(updatedItem.degreeStudentFees.value)
             }
