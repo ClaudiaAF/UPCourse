@@ -74,19 +74,14 @@ class LecturerView : View("Lecturer Staff") {
                     field("Salary") {
                         maxWidth = 220.0
                         textfield(model.lecturerSalary) {
-                            this.required()
-                            validator {
-                                when(it) {
-                                    null -> error("The price cannot be blank")
-                                    else -> null
-                                }
-                            }
+                            setText("350")
+                            isEditable = false
 
                             setOnKeyPressed {
                                 if (it.code == KeyCode.ENTER) {
                                     model.commit {
                                         addItem()
-                                        model.rollback()
+//                                        model.rollback()
                                     }
                                 }
                             }
@@ -108,7 +103,7 @@ class LecturerView : View("Lecturer Staff") {
                         action{
                             model.commit{
                                 addItem()
-                                model.rollback()
+//                                model.rollback()
                             }
 
                         }

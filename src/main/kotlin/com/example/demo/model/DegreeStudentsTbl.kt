@@ -24,12 +24,12 @@ object DegreeStudentsTbl : Table() {
 }
 
 fun ResultRow.toDegreeStudentsEntry() = DegreeStudentsEntry (
-    this[DegreeStudentsTbl.degreeStudentId],
-    this[DegreeStudentsTbl.degreeStudentName],
-    this[DegreeStudentsTbl.degreeStudentSurname],
-    this[DegreeStudentsTbl.degreeStudentSubject],
-    this[DegreeStudentsTbl.degreeStudentNumber],
-    this[DegreeStudentsTbl.degreeStudentFees].toDouble()
+            this[DegreeStudentsTbl.degreeStudentId],
+            this[DegreeStudentsTbl.degreeStudentName],
+            this[DegreeStudentsTbl.degreeStudentSurname],
+            this[DegreeStudentsTbl.degreeStudentSubject],
+            this[DegreeStudentsTbl.degreeStudentNumber],
+            this[DegreeStudentsTbl.degreeStudentFees].toDouble()
         )
 
 class DegreeStudentsEntry(degreeStudentId: Int, degreeStudentName: String, degreeStudentSurname: String, degreeStudentSubject: String, degreeStudentNumber: Int, degreeStudentFees: Double) {

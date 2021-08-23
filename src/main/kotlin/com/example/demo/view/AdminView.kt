@@ -85,19 +85,14 @@ class AdminView : View("Admin Staff") {
                     field("Salary") {
                         maxWidth = 220.0
                         textfield(model.adminSalary) {
-                            this.required()
-                            validator {
-                                when(it) {
-                                    null -> error("The price cannot be blank")
-                                    else -> null
-                                }
-                            }
+                            setText("350")
+                            isEditable = false
 
                             setOnKeyPressed {
                                 if (it.code == KeyCode.ENTER) {
                                     model.commit {
                                         addItem()
-                                        model.rollback()
+//                                        model.rollback()
                                     }
                                 }
                             }
@@ -111,7 +106,7 @@ class AdminView : View("Admin Staff") {
                         action{
                             model.commit{
                                 addItem()
-                                model.rollback()
+//                                model.rollback()
                             }
 
                         }

@@ -77,13 +77,13 @@ class DegreeStudentsView : View("Degree Students") {
                                 cellFormat {
                                     text = this.item.subjectName.value
                                     bind(model.degreeStudentSubject)
-                                    if (item.subjectCredits > 20) {
-
-                                        error("Please choose a Degree Subject")
-
-                                    } else {
-                                        //do nothing
-                                    }
+//                                    if (item.subjectCredits > 20) {
+//
+//                                        error("Please choose a Degree Subject")
+//
+//                                    } else {
+//                                        //do nothing
+//                                    }
                                 }
                             }
                         }
@@ -102,6 +102,7 @@ class DegreeStudentsView : View("Degree Students") {
                                 }
                             }
                         }
+
                     }
                 }
 
@@ -109,22 +110,10 @@ class DegreeStudentsView : View("Degree Students") {
                     field("Fees") {
                         maxWidth = 220.0
                         textfield(model.degreeStudentFees) {
-                            this.required()
-                            validator {
-                                when(it) {
-                                    null -> error("The price cannot be blank")
-                                    else -> null
-                                }
-                            }
+                            setText("350")
+                            isEditable = false
 
-                            setOnKeyPressed {
-                                if (it.code == KeyCode.ENTER) {
-                                    model.commit {
-                                        addItem()
-                                        model.rollback()
-                                    }
-                                }
-                            }
+
                         }
                     }
                 }
@@ -135,7 +124,15 @@ class DegreeStudentsView : View("Degree Students") {
                         action{
                             model.commit{
                                 addItem()
-                                model.rollback()
+//                                model.rollback()
+                            }
+                            setOnKeyPressed {
+                                if (it.code == KeyCode.ENTER) {
+                                    model.commit {
+                                        addItem()
+//                                        model.rollback()
+                                    }
+                                }
                             }
 
                         }

@@ -15,12 +15,14 @@ import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.Label
+import javafx.scene.control.TextField
 import javafx.scene.control.TextFormatter
 import javafx.scene.control.TextInputControl
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import org.slf4j.MDC.clear
 import tornadofx.*
 import java.lang.Exception
 
@@ -56,6 +58,11 @@ class DiplomaStudentsView : View("Diploma Students") {
                                 }
                             }
                         }
+                        if(model.commit()){
+                           textfield().clear()
+                        } else {
+                            null
+                        }
                     }
                 }
                 fieldset {
@@ -71,6 +78,11 @@ class DiplomaStudentsView : View("Diploma Students") {
                                 }
                             }
                         }
+                        if(model.commit()){
+                            textfield().clear()
+                        } else {
+                            null
+                        }
                     }
                 }
 
@@ -81,14 +93,19 @@ class DiplomaStudentsView : View("Diploma Students") {
                             cellFormat {
                                 text = this.item.subjectName.value
                                 bind(model.diplomaStudentSubject)
-                                if (item.subjectCredits < 20) {
-
-                                        error("Please choose a Diploma Subject")
-
-                                } else {
-                                    //do nothing
-                                }
+//                                if (item.subjectCredits < 20) {
+//
+//                                        error("Please choose a Diploma Subject")
+//
+//                                } else {
+//                                    //do nothing
+//                                }
                             }
+                        }
+                        if(model.commit()){
+                            textfield().clear()
+                        } else {
+                            null
                         }
                     }
                 }
@@ -106,6 +123,11 @@ class DiplomaStudentsView : View("Diploma Students") {
                                 }
                             }
                         }
+                        if(model.commit()){
+                            this.textfield().clear()
+                        } else {
+                            null
+                        }
                     }
                 }
                 fieldset {
@@ -113,6 +135,7 @@ class DiplomaStudentsView : View("Diploma Students") {
                         maxWidth = 220.0
                         textfield(model.diplomaStudentFees) {
                             setText("350")
+                            isEditable = false
                         }
                     }
                 }
@@ -123,7 +146,16 @@ class DiplomaStudentsView : View("Diploma Students") {
                         action{
                             model.commit{
                                 addItem()
-                                model.rollback()
+//                                model.rollback()
+                            }
+
+                            setOnKeyPressed {
+                                if (it.code == KeyCode.ENTER) {
+                                    model.commit {
+                                        addItem()
+//                                        model.rollback()
+                                    }
+                                }
                             }
 
                         }
