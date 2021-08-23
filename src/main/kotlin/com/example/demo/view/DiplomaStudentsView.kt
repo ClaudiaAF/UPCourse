@@ -2,16 +2,21 @@ package com.example.demo.view
 
 import com.example.demo.controller.DegreeStudentController
 import com.example.demo.controller.DiplomaStudentController
+import com.example.demo.controller.SubjectsController
 import com.example.demo.model.DegreeStudentsEntryModel
 import com.example.demo.model.DiplomaStudentsEntryModel
 import com.example.demo.model.ExpensesEntryModel
+import com.example.demo.model.SubjectsEntryModel
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.Label
+import javafx.scene.control.TextFormatter
+import javafx.scene.control.TextInputControl
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
@@ -23,6 +28,9 @@ class DiplomaStudentsView : View("Diploma Students") {
 
     var model = DiplomaStudentsEntryModel()
     val controller: DiplomaStudentController by inject()
+
+    val subjectController: SubjectsController by inject()
+    val boxObject = SimpleObjectProperty<SubjectsEntryModel>()
 
     var mTableView: TableViewEditModel<DiplomaStudentsEntryModel> by singleAssign()
     var totalFeesLabel: Label by singleAssign()
@@ -67,6 +75,25 @@ class DiplomaStudentsView : View("Diploma Students") {
                 }
 
                 fieldset {
+                    field {
+                        text = "Subject"
+                        combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+                            cellFormat {
+                                text = this.item.subjectName.value
+                                bind(model.diplomaStudentSubject)
+                                if (item.subjectCredits < 20) {
+
+                                        error("Please choose a Diploma Subject")
+
+                                } else {
+                                    //do nothing
+                                }
+                            }
+                        }
+                    }
+                }
+
+                fieldset {
                     field("Student Number") {
                         maxWidth = 220.0
                         textfield(model.diplomaStudentNumber) {
@@ -85,22 +112,7 @@ class DiplomaStudentsView : View("Diploma Students") {
                     field("Fees") {
                         maxWidth = 220.0
                         textfield(model.diplomaStudentFees) {
-                            this.required()
-                            validator {
-                                when(it) {
-                                    null -> error("The price cannot be blank")
-                                    else -> null
-                                }
-                            }
-
-                            setOnKeyPressed {
-                                if (it.code == KeyCode.ENTER) {
-                                    model.commit {
-                                        addItem()
-                                        model.rollback()
-                                    }
-                                }
-                            }
+                            setText("350")
                         }
                     }
                 }
@@ -143,6 +155,7 @@ class DiplomaStudentsView : View("Diploma Students") {
                         column("ID", DiplomaStudentsEntryModel::diplomaStudentId)
                         column("Name", DiplomaStudentsEntryModel::diplomaStudentName).makeEditable()
                         column("Surname", DiplomaStudentsEntryModel::diplomaStudentSurname).makeEditable()
+                        column("Subject", DiplomaStudentsEntryModel::diplomaStudentSubject)
                         column("Student Number",DiplomaStudentsEntryModel::diplomaStudentNumber).makeEditable()
 
                         onEditCommit {
@@ -186,8 +199,12 @@ class DiplomaStudentsView : View("Diploma Students") {
         }
     }
 
+    fun TextInputControl.filterInput(discriminator: (TextFormatter.Change) -> Boolean) {
+        textFormatter = TextFormatter<Any>(CustomTextFilter(discriminator))
+    }
+
     private fun addItem() {
-        controller.add(model.diplomaStudentName.value, model.diplomaStudentSurname.value, model.diplomaStudentNumber.value, model.diplomaStudentFees.value.toDouble())
+        controller.add(model.diplomaStudentName.value, model.diplomaStudentSurname.value, model.diplomaStudentSubject.value, model.diplomaStudentNumber.value, model.diplomaStudentFees.value.toDouble())
 
         updateTotalFees()
     }

@@ -17,6 +17,7 @@ object DiplomaStudentsTbl : Table() {
     val diplomaStudentId: Column<Int> = integer("dpStudentId").autoIncrement().primaryKey()
     val diplomaStudentName: Column<String> = varchar("dpStudentName", length = 50)
     val diplomaStudentSurname: Column<String> = varchar("dpStudentSurname", length = 50)
+    val diplomaStudentSubject: Column<String> = varchar("dpStudentSubject", length = 50)
     val diplomaStudentNumber: Column<Int> = integer("dpStudentNumber")
     val diplomaStudentFees: Column<BigDecimal> = decimal("dpFees", scale = 2, precision = 9)
 }
@@ -25,11 +26,12 @@ fun ResultRow.toDiplomaStudentsEntry() = DiplomaStudentsEntry (
     this[DiplomaStudentsTbl.diplomaStudentId],
     this[DiplomaStudentsTbl.diplomaStudentName],
     this[DiplomaStudentsTbl.diplomaStudentSurname],
+    this[DiplomaStudentsTbl.diplomaStudentSubject],
     this[DiplomaStudentsTbl.diplomaStudentNumber],
     this[DiplomaStudentsTbl.diplomaStudentFees].toDouble()
 )
 
-class DiplomaStudentsEntry(diplomaStudentId: Int, diplomaStudentName: String, diplomaStudentSurname: String, diplomaStudentNumber: Int, diplomaStudentFees: Double) {
+class DiplomaStudentsEntry(diplomaStudentId: Int, diplomaStudentName: String, diplomaStudentSurname: String, diplomaStudentSubject: String, diplomaStudentNumber: Int, diplomaStudentFees: Double) {
     val dpStudentIdProperty = SimpleIntegerProperty(diplomaStudentId)
     var diplomaStudentId by dpStudentIdProperty
 
@@ -38,6 +40,9 @@ class DiplomaStudentsEntry(diplomaStudentId: Int, diplomaStudentName: String, di
 
     val dpStudentSurnameProperty = SimpleStringProperty(diplomaStudentSurname)
     var diplomaStudentSurname by dpStudentSurnameProperty
+
+    val dpStudentSubjectProperty = SimpleStringProperty(diplomaStudentSubject)
+    var diplomaStudentSubject by dpStudentSubjectProperty
 
     val dpStudentNumberProperty = SimpleIntegerProperty(diplomaStudentNumber)
     var diplomaStudentNumber by dpStudentNumberProperty
@@ -48,7 +53,7 @@ class DiplomaStudentsEntry(diplomaStudentId: Int, diplomaStudentName: String, di
     var totalFeesDiplomaExpenses = javafx.beans.binding.Bindings.add(dpStudentFeesProperty, 0)
 
     override fun toString(): String {
-        return "DiplomaStudentsEntry(id=$diplomaStudentId, name=$diplomaStudentName, surname=$diplomaStudentSurname, studentNumber=$diplomaStudentNumber, studentFees=$diplomaStudentFees)"
+        return "DiplomaStudentsEntry(id=$diplomaStudentId, name=$diplomaStudentName, surname=$diplomaStudentSurname, subject=$diplomaStudentSubject studentNumber=$diplomaStudentNumber, studentFees=$diplomaStudentFees)"
     }
 }
 
@@ -56,6 +61,7 @@ class DiplomaStudentsEntryModel : ItemViewModel<DiplomaStudentsEntry>() {
     val diplomaStudentId = bind{ item?.dpStudentIdProperty }
     val diplomaStudentName = bind { item?.dpStudentNameProperty }
     val diplomaStudentSurname = bind { item?.dpStudentSurnameProperty }
+    val diplomaStudentSubject = bind { item?.dpStudentSubjectProperty }
     val diplomaStudentNumber = bind { item?.dpStudentNumberProperty }
     val diplomaStudentFees = bind { item?.dpStudentFeesProperty }
     var totalFeesDiplomaExpenses = itemProperty.select (DiplomaStudentsEntry::totalFeesDiplomaExpenses)

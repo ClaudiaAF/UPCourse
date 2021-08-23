@@ -27,11 +27,12 @@ class DiplomaStudentController : Controller() {
     }
 
 
-    fun add(newDiplomaStudentName: String, newDiplomaStudentSurname: String, newDiplomaStudentNumber: Int, newDiplomaStudentFees: Double) : DiplomaStudentsEntry {
+    fun add(newDiplomaStudentName: String, newDiplomaStudentSurname: String, newDiplomaStudentSubject: String, newDiplomaStudentNumber: Int, newDiplomaStudentFees: Double) : DiplomaStudentsEntry {
         val newEntry = execute {
             DiplomaStudentsTbl.insert {
                 it[diplomaStudentName] = newDiplomaStudentName
                 it[diplomaStudentSurname] = newDiplomaStudentSurname
+                it[diplomaStudentSubject] = newDiplomaStudentSubject
                 it[diplomaStudentNumber] = newDiplomaStudentNumber
                 it[diplomaStudentFees] = BigDecimal.valueOf(newDiplomaStudentFees)
             }
@@ -39,10 +40,10 @@ class DiplomaStudentController : Controller() {
 
         listOfDiplomaStudents.add(
             DiplomaStudentsEntryModel().apply {
-                item = DiplomaStudentsEntry(newEntry[DiplomaStudentsTbl.diplomaStudentId], newDiplomaStudentName, newDiplomaStudentSurname, newDiplomaStudentNumber, newDiplomaStudentFees)
+                item = DiplomaStudentsEntry(newEntry[DiplomaStudentsTbl.diplomaStudentId], newDiplomaStudentName, newDiplomaStudentSurname, newDiplomaStudentSubject, newDiplomaStudentNumber, newDiplomaStudentFees)
             }
         )
-        return DiplomaStudentsEntry(newEntry[DiplomaStudentsTbl.diplomaStudentId], newDiplomaStudentName, newDiplomaStudentSurname, newDiplomaStudentNumber, newDiplomaStudentFees)
+        return DiplomaStudentsEntry(newEntry[DiplomaStudentsTbl.diplomaStudentId], newDiplomaStudentName, newDiplomaStudentSurname, newDiplomaStudentSubject, newDiplomaStudentNumber, newDiplomaStudentFees)
     }
 
     fun update(updatedItem: DiplomaStudentsEntryModel): Int {
@@ -50,6 +51,7 @@ class DiplomaStudentController : Controller() {
             DiplomaStudentsTbl.update ({ DiplomaStudentsTbl.diplomaStudentId eq(updatedItem.diplomaStudentId.value.toInt()) }) {
                 it[diplomaStudentName] = updatedItem.diplomaStudentName.value
                 it[diplomaStudentSurname] = updatedItem.diplomaStudentSurname.value
+                it[diplomaStudentSubject] = updatedItem.diplomaStudentSubject.value
                 it[diplomaStudentNumber] = updatedItem.diplomaStudentNumber.value
                 it[diplomaStudentFees] = BigDecimal.valueOf(updatedItem.diplomaStudentFees.value)
             }

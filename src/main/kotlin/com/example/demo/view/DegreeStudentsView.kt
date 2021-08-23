@@ -79,6 +79,7 @@ class DegreeStudentsView : View("Degree Students") {
                         }
                     }
                 }
+
                 fieldset {
                     field("Fees") {
                         maxWidth = 220.0

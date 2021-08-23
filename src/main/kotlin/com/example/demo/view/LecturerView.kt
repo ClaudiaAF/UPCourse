@@ -68,12 +68,7 @@ class LecturerView : View("Lecturer Staff") {
                         }
                     }
                 }
-                    combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects)  {
-                        cellFormat {
-                            text = this.item.subjectName.value
-                            bind(model.lecturerSubject)
-                        }
-                    }
+
 
                 fieldset {
                     field("Salary") {
@@ -97,6 +92,14 @@ class LecturerView : View("Lecturer Staff") {
                             }
                         }
                     }
+                }
+
+                combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+                    cellFormat {
+                        text = this.item.subjectName.value
+                        bind(model.lecturerSubject)
+                    }
+
                 }
 
                 hbox(10.0) {
