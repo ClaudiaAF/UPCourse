@@ -15,7 +15,7 @@ import java.math.BigDecimal
 class SubjectsController : Controller() {
 
     //get all items
-    private val listOfSubjects: ObservableList<SubjectsEntryModel> = execute {
+    val listOfSubjects: ObservableList<SubjectsEntryModel> = execute {
         SubjectsTbl.selectAll().map {
             SubjectsEntryModel().apply {
                 item = it.toSubjectEntry()
@@ -27,8 +27,6 @@ class SubjectsController : Controller() {
 
     init {
         items = listOfSubjects
-
-
     }
 
 
@@ -71,6 +69,10 @@ class SubjectsController : Controller() {
             }
         }
         listOfSubjects.remove(model)
+    }
+
+    fun postSubject(name: String) {
+        val subjectName = SubjectsEntryModel()
     }
 
 }

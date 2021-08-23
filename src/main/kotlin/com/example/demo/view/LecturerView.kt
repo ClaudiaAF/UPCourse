@@ -1,19 +1,30 @@
 package com.example.demo.view
 
 import com.example.demo.controller.LecturerController
+import com.example.demo.controller.SubjectsController
 import com.example.demo.model.LecturerEntryModel
+import com.example.demo.model.SubjectsEntryModel
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.SimpleStringProperty
+import javafx.collections.FXCollections
 import javafx.geometry.Pos
+import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
+import javafx.scene.text.Text
 import tornadofx.*
 import java.lang.Exception
+import javax.swing.ComboBoxModel
 
 class LecturerView : View("Lecturer Staff") {
 
     var model = LecturerEntryModel()
+    var subjectModel = SubjectsEntryModel()
     val controller: LecturerController by inject()
+    val subjectController: SubjectsController by inject()
+    val boxObject = SimpleObjectProperty<SubjectsEntryModel>()
 
     var mTableView: TableViewEditModel<LecturerEntryModel> by singleAssign()
     var totalSalariesLabel: Label by singleAssign()
@@ -21,6 +32,7 @@ class LecturerView : View("Lecturer Staff") {
 
     init {
         updateTotalSalaries()
+        subjectsList()
     }
 
     override val root = borderpane {
@@ -56,22 +68,13 @@ class LecturerView : View("Lecturer Staff") {
                         }
                     }
                 }
-
-                fieldset {
-                    field("Subject Taught") {
-                        maxWidth = 220.0
-                        textfield(model.lecturerSubject) {
-                            this.required()
-                            validator {
-                                when {
-                                    it.isNullOrEmpty() -> error("field cannot be empty")
-                                    it!!.length < 3 -> error("too short")
-                                    else -> null
-                                }
-                            }
+                    combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects)  {
+                        cellFormat {
+                            text = this.item.subjectName.value
+                            bind(model.lecturerSubject)
                         }
                     }
-                }
+
                 fieldset {
                     field("Salary") {
                         maxWidth = 220.0
@@ -134,7 +137,7 @@ class LecturerView : View("Lecturer Staff") {
                         column("ID", LecturerEntryModel::lecturerId)
                         column("Name", LecturerEntryModel::lecturerName).makeEditable()
                         column("Surname", LecturerEntryModel::lecturerSurname).makeEditable()
-                        column("Subject Taught", LecturerEntryModel::lecturerSubject).makeEditable()
+                        column("Subject Taught", LecturerEntryModel::lecturerSubject)
 
                         onEditCommit {
                             controller.update(it)
@@ -161,6 +164,11 @@ class LecturerView : View("Lecturer Staff") {
                 }
             }
         }
+    }
+
+    private fun subjectsList() {
+        val subjects = String()
+        subjectModel.subjectName.value = subjects
     }
 
     private fun updateTotalSalaries() {
