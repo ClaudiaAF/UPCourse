@@ -35,6 +35,7 @@ class UPCourseWorkspace : Workspace("UPCourse", NavigationMode.Tabs) {
         dock<AdminView>()
         dock<LecturerView>()
         dock<SubjectsView>()
+        dock<FundsPool>()
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }

@@ -44,7 +44,7 @@ class LecturerEntry(lecturerId: Int, lecturerName: String, lecturerSurname: Stri
     var totalLecturerSalaryExpenses = javafx.beans.binding.Bindings.add(lecturerSalaryProperty, 0)
 
     override fun toString(): String {
-        return "LecturerEntry(id=$lecturerId, name=$lecturerName, surname=$lecturerSurname, studentNumber=$lecturerSubject, studentFees=$lecturerSalary)"
+        return "LecturerEntry(id=$lecturerId, name=$lecturerName, surname=$lecturerSurname, lecturerNumber=$lecturerSubject, lecturerFees=$lecturerSalary, totalLecturerSalary=$totalLecturerSalaryExpenses)"
     }
 }
 
