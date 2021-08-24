@@ -91,8 +91,8 @@ class DiplomaStudentsView : View("Diploma Students") {
                         text = "Subject"
                         combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
                             cellFormat {
-                                text = this.item.subjectName.value
                                 bind(model.diplomaStudentSubject)
+                                text = this.item.subjectName.value
 //                                if (item.subjectCredits < 20) {
 //
 //                                        error("Please choose a Diploma Subject")
@@ -169,6 +169,7 @@ class DiplomaStudentsView : View("Diploma Students") {
                                 else -> {
                                     val diff = totalFeesProperty.value
                                     - selectedItem.item.diplomaStudentFees
+
                                     totalFeesProperty.value = diff
 
                                     controller.delete(selectedItem)

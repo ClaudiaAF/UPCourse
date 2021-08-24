@@ -2,8 +2,10 @@ package com.example.demo.view
 
 import com.example.demo.controller.*
 import com.example.demo.model.*
+import com.sun.javafx.binding.ContentBinding.bind
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.geometry.Pos
@@ -14,8 +16,8 @@ import java.lang.Exception
 import javax.xml.soap.Text
 
 class FundsPool : View ("Funds Pool") {
-    var totalFundsPoolLabel: Label by singleAssign()
-    val totalFundsProperty = SimpleDoubleProperty(0.0)
+
+    var overallExpense = SimpleDoubleProperty(400000.00)
 
     //lecturers
     val lecturersController: LecturerController by inject()
@@ -62,7 +64,13 @@ class FundsPool : View ("Funds Pool") {
     }
 
     override val root = borderpane {
+
         top =vbox {
+
+//        var totalExpenses = 500000.00 - lecturerSalariesProperty.value.toDouble() + adminSalariesProperty.value.toDouble()
+
+        label().textProperty().bind(Bindings.concat("R", Bindings.format("%.2f", overallExpense)))
+
             piechart("Total Expenses") {
                 data("Lecturers Expenses", lecturerSalariesProperty.value.toDouble())
                 data("Admin Expenses", adminSalariesProperty.value.toDouble())
@@ -99,6 +107,16 @@ class FundsPool : View ("Funds Pool") {
 
                     }
                     paddingTop = 20
+                }
+            }
+
+            val addedExpenses = lecturerSalariesProperty.value.toDouble() + adminSalariesProperty.value.toDouble()
+
+            button("Settle"){
+                action {
+                    val diff = overallExpense.value.toDouble() - addedExpenses
+
+                    overallExpense.value = diff
                 }
             }
 
@@ -146,6 +164,15 @@ class FundsPool : View ("Funds Pool") {
 
                         }
                         paddingTop = 20
+                    }
+                }
+
+                val addedPayments = subjectsPriceProperty.value.toDouble() + diplomaFeesProperty.value.toDouble() + degreeFeesProperty.value.toDouble()
+                button("Settle Incomming Payments"){
+                    action {
+                        val diff = overallExpense.value.toDouble() + addedPayments
+
+                        overallExpense.value = diff
                     }
                 }
             }
