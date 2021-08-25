@@ -250,9 +250,7 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
                             controller.delete(selectedItem!!)
                         }
                     }
-
                 }
-
                 spacing = 20.0
             }
         }
