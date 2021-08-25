@@ -16,6 +16,8 @@ import javafx.geometry.Pos
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
+import javafx.scene.paint.Color
+import javafx.scene.text.FontWeight
 import javafx.scene.text.Text
 import tornadofx.*
 import tornadofx.controlsfx.columnfilter
@@ -45,11 +47,23 @@ class LecturerView : View("Lecturer Staff"), Searchable {
     override val root = borderpane {
 
         center = vbox {
+            vboxConstraints {
+                paddingTop = 30.0
+                paddingLeft = 80.0
+            }
+            label("Leturers") {
+                style {
+                    fontFamily = "Open Sans"
+                    fontSize = 40.pt
+                    fontWeight = FontWeight.BOLD
+                    paddingBottom = 50
+                }
+            }
 
             form {
                 fieldset {
                     field("Name") {
-                        maxWidth = 220.0
+                        maxWidth = 400.0
                         textfield(model.lecturerName) {
                             this.required()
                             validator {
@@ -59,12 +73,24 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
                 fieldset {
                     field("Surname") {
-                        maxWidth = 220.0
+                        maxWidth = 400.0
                         textfield(model.lecturerSurname) {
                             this.required()
                             validator {
@@ -74,10 +100,45 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.MEDIUM
                         }
                     }
                 }
 
+                fieldset {
+                    field {
+                        text = "Subject Taught"
+                        combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+                            cellFormat {
+                                text = this.item.subjectName.value
+                                bind(model.lecturerSubject)
+                            }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
+                        }
+                    }
+                }
 
                 fieldset {
                     field("Salary") {
@@ -86,6 +147,40 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                             setText("350")
                             isEditable = false
 
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
+                        }
+                    }
+                }
+
+                hbox(10.0) {
+                    button("Add Item") {
+
+                        style{
+                            backgroundColor = multi(Styles.borderLineColor, Styles.borderLineColor, Styles.borderLineColor)
+                            textFill = Color.WHITE
+                            fontFamily = "Open Sans"
+                            fontWeight = FontWeight.BOLD
+                            backgroundRadius += box(10.px)
+                            padding = box(15.px, 50.px)
+                        }
+
+                        enableWhen(model.valid)
+                        action{
+                            model.commit{
+                                addItem()
+//                                model.rollback()
+                            }
                             setOnKeyPressed {
                                 if (it.code == KeyCode.ENTER) {
                                     model.commit {
@@ -96,29 +191,18 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                             }
                         }
                     }
-                }
-
-                combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
-
-                    cellFormat {
-                        text = this.item.subjectName.value
-                        bind(model.lecturerSubject)
-                    }
-                }
-
-                hbox(10.0) {
-                    button("Add Item") {
-                        enableWhen(model.valid)
-                        action{
-                            model.commit{
-                                addItem()
-//                                model.rollback()
-                            }
-
-                        }
-                    }
 
                     button("delete"){
+
+                        style{
+                            backgroundColor = multi(Styles.bloodRed, Styles.bloodRed, Styles.bloodRed)
+                            textFill = Color.WHITE
+                            fontFamily = "Open Sans"
+                            fontWeight = FontWeight.BOLD
+                            backgroundRadius += box(10.px)
+                            padding = box(15.px, 50.px)
+                        }
+
                         action {
                             val selectedItem: LecturerEntryModel? = mTableView.tableView.selectedItem
                             when(selectedItem) {
@@ -135,44 +219,59 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                             controller.delete(selectedItem!!)
                         }
                     }
-
                 }
-                fieldset {
-                    togglebutton ("Subjects"){
-                        action {
-                            text = if (isSelected) "On" else "off"
-                        }
-                    }
-                    tableview<LecturerEntryModel> {
-                        items = controller.items
-                        mTableView = editModel
-                        column("ID", LecturerEntryModel::lecturerId)
-                        column("Name", LecturerEntryModel::lecturerName).makeEditable()
-                        column("Surname", LecturerEntryModel::lecturerSurname).makeEditable()
-                        column("Subject Taught", LecturerEntryModel::lecturerSubject)
-
-                        onEditCommit {
-                            controller.update(it)
-                        }
-                    }
-                }
-
-
+                spacing = 20.0
             }
         }
 
         right = vbox {
-            alignment = Pos.CENTER
+            vboxConstraints {
+                alignment = Pos.CENTER_RIGHT
+                paddingRight = 160.0
+            }
 
-//            piechart("Total Expenses") {
-//                data = controller.pieItemsData
-//            }
+            tableview<LecturerEntryModel> {
+                addClass(Styles.regularTable)
 
-            totalSalariesLabel = label {
-                if (totalSalariesProperty.doubleValue() != 0.0) {
-                    bind(Bindings.concat("Total expenses: ", "R", Bindings.format("%.2f", totalSalariesProperty)))
-                } else {
+                items = controller.items
+                mTableView = editModel
+                column("ID", LecturerEntryModel::lecturerId)
+                column("Name", LecturerEntryModel::lecturerName).makeEditable()
+                column("Surname", LecturerEntryModel::lecturerSurname).makeEditable()
+                column("Subject Taught", LecturerEntryModel::lecturerSubject)
 
+                onEditCommit {
+                    controller.update(it)
+                }
+                style{
+                    prefWidth = 1000.px
+                }
+            }
+
+            stackpane {
+                stackpaneConstraints {
+                    paddingTop = 30.0
+                    alignment = Pos.CENTER_RIGHT
+                }
+                rectangle {
+                    width = 500.0
+                    height = 150.0
+                    arcHeight = 100.0
+                    arcWidth = 100.0
+                    fill = Styles.borderLineColor
+                }
+
+                totalSalariesLabel = label {
+                    if (totalSalariesProperty.doubleValue() != 0.0) {
+                        bind(Bindings.concat("Total expenses: ", "R", Bindings.format("%.2f", totalSalariesProperty)))
+                    } else {
+
+                    }
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 25.pt
+                        fontWeight = FontWeight.BOLD
+                    }
                 }
             }
         }
