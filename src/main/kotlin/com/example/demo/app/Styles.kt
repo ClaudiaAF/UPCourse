@@ -50,6 +50,8 @@ class Styles : Stylesheet() {
         val darkTextColor = c("#262125")
         val offWhite = c("F0F0ED")
         val bloodRed = c("CB0000")
+        val bloodOrange = c("E16842")
+        val greenPastures = c("51BC76")
 
         // Buttons
         val successButton by cssclass()

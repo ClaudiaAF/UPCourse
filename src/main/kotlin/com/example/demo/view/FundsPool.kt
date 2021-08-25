@@ -7,10 +7,14 @@ import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.geometry.Pos
 import javafx.scene.chart.PieChart
 import javafx.scene.control.Label
+import javafx.scene.layout.Priority
+import javafx.scene.paint.Color
+import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
 import javax.xml.soap.Text
@@ -48,6 +52,7 @@ class FundsPool : View ("Funds Pool") {
     val adminController: AdminController by inject()
     var adminSalariesLabel: Label by singleAssign()
     val adminSalariesProperty = SimpleDoubleProperty(0.0)
+    var totalCostNumber = SimpleStringProperty()
 
     var pieItemsData = FXCollections.observableArrayList<PieChart.Data>()
 
@@ -58,32 +63,100 @@ class FundsPool : View ("Funds Pool") {
         degreeTotalFees()
         adminTotalSalaries()
 
-
-//        pieItemsData.add(PieChart.Data("Admin Expenses", lecturerSalariesProperty.value.toDouble(), "Admin"))
-
     }
 
     override val root = borderpane {
 
-        top =vbox {
-
-//        var totalExpenses = 500000.00 - lecturerSalariesProperty.value.toDouble() + adminSalariesProperty.value.toDouble()
-
-        label().textProperty().bind(Bindings.concat("R", Bindings.format("%.2f", overallExpense)))
-
-            piechart("Total Expenses") {
-                data("Lecturers Expenses", lecturerSalariesProperty.value.toDouble())
-                data("Admin Expenses", adminSalariesProperty.value.toDouble())
-
-                paddingTop = 40
+        top = vbox {
+            vboxConstraints {
+                paddingTop = 30.0
+                paddingLeft = 80.0
+                alignment = Pos.CENTER_LEFT
+            }
+            label("Funds Pool"){
+                style {
+                    fontFamily = "Open Sans"
+                    fontSize = 40.pt
+                    fontWeight = FontWeight.BOLD
+                    paddingBottom = 50
+                }
             }
 
-            hbox (spacing = 30, alignment = Pos.CENTER){
+            hbox {
+                hboxConstraints {
+                    alignment = Pos.CENTER
+                }
+                stackpane {
+                    stackpaneConstraints {
+                        paddingTop = 5.0
+                        paddingBottom = 40.0
+                    }
+                    rectangle {
+                        width = 400.0
+                        height = 100.0
+                        arcHeight = 100.0
+                        arcWidth = 100.0
+                        fill = Styles.borderLineColor
+                    }
+                    text {
+                        if (overallExpense.doubleValue() != 0.0) {
+                            textProperty().bind(Bindings.concat("R", Bindings.format("%.2f", overallExpense)))
+                        } else {
+                            //do nothing
+                        }
+                        style {
+                            alignment = Pos.CENTER
+                            fontFamily = "Open Sans"
+                            fontSize = 30.pt
+                            fontWeight = FontWeight.BOLD
+                            textFill = Color.WHITE
+                        }
+                    }
+                }
+
+            }
+
+            hbox {
+                hboxConstraints {
+                    alignment = Pos.CENTER
+
+                }
+                piechart("Total Expenses") {
+                    data("Lecturers Expenses", lecturerSalariesProperty.value.toDouble())
+                    data("Admin Expenses", adminSalariesProperty.value.toDouble())
+
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 10.pt
+                        fontWeight = FontWeight.MEDIUM
+                    }
+                }
+               rectangle {
+                   width = 180.0
+                   height = 1.0
+                   fill = Color.TRANSPARENT
+               }
+
+                piechart("Total Owed To UPCourse") {
+                    data("Subjects Total Owed", subjectsPriceProperty.value.toDouble())
+                    data("Diploma Fees Owed", diplomaFeesProperty.value.toDouble())
+                    data("Degree Fees Owed", degreeFeesProperty.value.toDouble())
+
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 10.pt
+                        fontWeight = FontWeight.MEDIUM
+                    }
+                }
+            }
+
+            hbox (spacing = 30, alignment = Pos.CENTER_LEFT){
+
                 lecturerSalariesLabel = label {
                     if (lecturerSalariesProperty.doubleValue() != 0.0) {
                         bind(
                             Bindings.concat(
-                                "Lecturers Salary Expenses: ",
+                                " ",
                                 "R",
                                 Bindings.format("%.2f", lecturerSalariesProperty)
                             )
@@ -91,14 +164,23 @@ class FundsPool : View ("Funds Pool") {
                     } else {
 
                     }
-                    paddingTop = 20
+                    paddingTop = 10
+                    paddingLeft = 440
+                    paddingBottom = 10
+
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 15.pt
+                        fontWeight = FontWeight.BOLD
+                        textFill = Styles.bloodOrange
+                    }
                 }
 
                 adminSalariesLabel = label {
                     if (adminSalariesProperty.doubleValue() != 0.0) {
                         bind(
                             Bindings.concat(
-                                "Admin Salary Expenses: ",
+                                " ",
                                 "R",
                                 Bindings.format("%.2f", adminSalariesProperty)
                             )
@@ -106,78 +188,136 @@ class FundsPool : View ("Funds Pool") {
                     } else {
 
                     }
-                    paddingTop = 20
+                    paddingTop = 10
+                    paddingLeft = 20
+                    paddingBottom = 10
+
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 15.pt
+                        fontWeight = FontWeight.BOLD
+                        textFill = Styles.borderLineColor
+                    }
                 }
-            }
-
-            val addedExpenses = lecturerSalariesProperty.value.toDouble() + adminSalariesProperty.value.toDouble()
-
-            button("Settle"){
-                action {
-                    val diff = overallExpense.value.toDouble() - addedExpenses
-
-                    overallExpense.value = diff
-                }
-            }
-
-            vbox {
-                piechart("Total Owed To UPCourse") {
-                    data("Subjects Total Owed", subjectsPriceProperty.value.toDouble())
-                    data("Diploma Fees Owed", diplomaFeesProperty.value.toDouble())
-                    data("Degree Fees Owed", degreeFeesProperty.value.toDouble())
-
-                    paddingTop = 40
+                //here?
+                rectangle {
+                    width = 257.0
+                    height = 1.0
+                    fill = Color.TRANSPARENT
                 }
 
-                hbox (spacing = 30, alignment = Pos.CENTER){
-                    //subjects here
-                    subjectsPriceLabel = label {
-                        if (subjectsPriceProperty.doubleValue() != 0.0) {
-                            bind(
-                                Bindings.concat(
-                                    "Subjects Total Owed: ",
-                                    "R",
-                                    Bindings.format("%.2f", subjectsPriceProperty)
-                                )
+                subjectsPriceLabel = label {
+                    if (subjectsPriceProperty.doubleValue() != 0.0) {
+                        bind(
+                            Bindings.concat(
+                                " ",
+                                "R",
+                                Bindings.format("%.2f", subjectsPriceProperty)
                             )
-                        } else {
+                        )
+                    } else {
 
-                        }
-                        paddingTop = 20
                     }
-
-                    //diploma here
-                    diplomaFeesLabel = label {
-                        if (diplomaFeesProperty.doubleValue() != 0.0) {
-                            bind(Bindings.concat("Diploma Fees Owed: ", "R", Bindings.format("%.2f", diplomaFeesProperty)))
-                        } else {
-
-                        }
-                        paddingTop = 20
-                    }
-
-                    //degree here
-                    degreeFeesLabel = label {
-                        if (degreeFeesProperty.doubleValue() != 0.0) {
-                            bind(Bindings.concat("Degree Fees Owed: ", "R", Bindings.format("%.2f", degreeFeesProperty)))
-                        } else {
-
-                        }
-                        paddingTop = 20
+                    paddingTop = 10
+                    paddingLeft = 80
+                    paddingBottom = 10
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 15.pt
+                        fontWeight = FontWeight.BOLD
+                        textFill = Styles.bloodOrange
                     }
                 }
 
-                val addedPayments = subjectsPriceProperty.value.toDouble() + diplomaFeesProperty.value.toDouble() + degreeFeesProperty.value.toDouble()
-                button("Settle Incomming Payments"){
-                    action {
-                        val diff = overallExpense.value.toDouble() + addedPayments
+                //diploma here
+                diplomaFeesLabel = label {
+                    if (diplomaFeesProperty.doubleValue() != 0.0) {
+                        bind(Bindings.concat(" ", "R", Bindings.format("%.2f", diplomaFeesProperty)))
+                    } else {
 
-                        overallExpense.value = diff
+                    }
+                    paddingTop = 10
+                    paddingBottom = 10
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 15.pt
+                        fontWeight = FontWeight.BOLD
+                        textFill = Styles.borderLineColor
+                    }
+                }
+
+                //degree here
+                degreeFeesLabel = label {
+                    if (degreeFeesProperty.doubleValue() != 0.0) {
+                        bind(Bindings.concat(" ", "R", Bindings.format("%.2f", degreeFeesProperty)))
+                    } else {
+
+                    }
+                    paddingTop = 10
+                    paddingBottom = 10
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 15.pt
+                        fontWeight = FontWeight.BOLD
+                        textFill = Styles.greenPastures
                     }
                 }
             }
-        }
-    }
+
+                    hbox {
+
+                        rectangle {
+                            width = 457.0
+                            height = 1.0
+                            fill = Color.TRANSPARENT
+                        }
+
+                        val addedExpenses = lecturerSalariesProperty.value.toDouble() + adminSalariesProperty.value.toDouble()
+
+                        button("Settle Payments") {
+                            style {
+                                backgroundColor = multi(Styles.borderLineColor, Styles.borderLineColor, Styles.borderLineColor)
+                                textFill = Color.WHITE
+                                fontFamily = "Open Sans"
+                                fontWeight = FontWeight.BOLD
+                                backgroundRadius += box(10.px)
+                                padding = box(15.px, 50.px)
+                            }
+
+                            action {
+                                val diff = overallExpense.value.toDouble() - addedExpenses
+
+                                overallExpense.value = diff
+                            }
+                        }
+
+                        rectangle {
+                            width = 460.0
+                            height = 1.0
+                            fill = Color.TRANSPARENT
+                        }
+
+                        val addedPayments = subjectsPriceProperty.value.toDouble() + diplomaFeesProperty.value.toDouble() + degreeFeesProperty.value.toDouble()
+                        button("Settle Incomming Payments"){
+                            style{
+                                backgroundColor = multi(Styles.borderLineColor, Styles.borderLineColor, Styles.borderLineColor)
+                                textFill = Color.WHITE
+                                fontFamily = "Open Sans"
+                                fontWeight = FontWeight.BOLD
+                                backgroundRadius += box(10.px)
+                                padding = box(15.px, 50.px)
+                            }
+
+                            action {
+                                val diff = overallExpense.value.toDouble() + addedPayments
+
+                                overallExpense.value = diff
+                            }
+                        }
+                    }
+                }
+             }
+
 
     private fun subjectsTotalPrice() {
         var total = 0.0

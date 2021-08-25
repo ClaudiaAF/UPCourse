@@ -51,6 +51,7 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
                     fontSize = 40.pt
                     fontWeight = FontWeight.BOLD
                     paddingBottom = 50
+                    paddingTop = 50
                 }
             }
 
