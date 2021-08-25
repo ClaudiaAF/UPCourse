@@ -19,6 +19,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
 
@@ -37,10 +38,23 @@ class SubjectsView : View("Subjects"), Searchable {
 
     override val root = borderpane {
         center = vbox {
+            vboxConstraints {
+                paddingTop = 30.0
+                paddingLeft = 80.0
+            }
+            label("Subjects"){
+                style {
+                    fontFamily = "Open Sans"
+                    fontSize = 40.pt
+                    fontWeight = FontWeight.BOLD
+                    paddingBottom = 50
+                }
+            }
+
             form {
                 fieldset {
                     field("Subject Name") {
-                        maxWidth = 220.0
+                        maxWidth = 400.0
                         textfield(model.subjectName) {
                             this.required()
                             validator {
@@ -50,6 +64,18 @@ class SubjectsView : View("Subjects"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
@@ -65,6 +91,18 @@ class SubjectsView : View("Subjects"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
@@ -81,11 +119,23 @@ class SubjectsView : View("Subjects"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
                 fieldset {
-                    field("Hours per Week") {
+                    field("Hours/Week") {
                         maxWidth = 220.0
                         textfield(model.hoursPerWeek) {
                             this.required()
@@ -96,13 +146,23 @@ class SubjectsView : View("Subjects"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
-
-
                     fieldset {
-                        field("Price Per Month") {
+                        field("Price/Month") {
                             maxWidth = 220.0
                             textfield(model.pricePerMonth) {
                                 this.required()
@@ -112,6 +172,13 @@ class SubjectsView : View("Subjects"), Searchable {
                                         it!!.length < 3 -> error("too short")
                                         else -> null
                                     }
+                                }
+                                style {
+                                    padding = box(12.px)
+                                    backgroundRadius += box(10.px)
+                                    borderRadius += box(10.px)
+                                    borderColor += box(Color.TRANSPARENT)
+                                    backgroundColor += Color.WHITE
                                 }
 
                                 setOnKeyPressed {
@@ -123,11 +190,25 @@ class SubjectsView : View("Subjects"), Searchable {
                                     }
                                 }
                             }
+                            style {
+                                fontFamily = "Open Sans"
+                                fontSize = 10.pt
+                                fontWeight = FontWeight.LIGHT
+                            }
                         }
                     }
 
                 hbox(10.0) {
                     button("Add Item") {
+                        style{
+                            backgroundColor = multi(Styles.borderLineColor, Styles.borderLineColor, Styles.borderLineColor)
+                            textFill = Color.WHITE
+                            fontFamily = "Open Sans"
+                            fontWeight = FontWeight.BOLD
+                            backgroundRadius += box(10.px)
+                            padding = box(15.px, 50.px)
+                        }
+
                         enableWhen(model.valid)
                         action{
                             model.commit{
@@ -139,6 +220,15 @@ class SubjectsView : View("Subjects"), Searchable {
                     }
 
                     button("delete"){
+                        style{
+                            backgroundColor = multi(Styles.bloodRed, Styles.bloodRed, Styles.bloodRed)
+                            textFill = Color.WHITE
+                            fontFamily = "Open Sans"
+                            fontWeight = FontWeight.BOLD
+                            backgroundRadius += box(10.px)
+                            padding = box(15.px, 50.px)
+                        }
+
                         action {
                             val selectedItem: SubjectsEntryModel? = mTableView.tableView.selectedItem
                             when(selectedItem) {
@@ -155,40 +245,59 @@ class SubjectsView : View("Subjects"), Searchable {
                             controller.delete(selectedItem!!)
                         }
                     }
-
                 }
-                fieldset {
-                    tableview<SubjectsEntryModel> {
-                        items = controller.items
-                        mTableView = editModel
-                        column("ID", SubjectsEntryModel::subjectId)
-                        column("Subject Name", SubjectsEntryModel::subjectName).makeEditable()
-                        column("Code", SubjectsEntryModel::subjectCode).makeEditable()
-                        column("Credits", SubjectsEntryModel::subjectCredits).makeEditable()
-                        column("Hours Per Week", SubjectsEntryModel::hoursPerWeek).makeEditable()
-
-                        onEditCommit {
-                            controller.update(it)
-                        }
-                    }
-                }
-
-
+                spacing = 20.0
             }
         }
 
         right = vbox {
-            alignment = Pos.CENTER
+            vboxConstraints {
+                alignment = Pos.CENTER_RIGHT
+                paddingRight = 160.0
+            }
 
-//            piechart("Total Expenses") {
-//                data = controller.pieItemsData
-//            }
+            tableview<SubjectsEntryModel> {
+                addClass(Styles.regularTable)
 
-            totalPriceLabel = label {
-                if (totalPriceProperty.doubleValue() != 0.0) {
-                    bind(Bindings.concat("Total expenses: ", "R", Bindings.format("%.2f", totalPriceProperty)))
-                } else {
+                items = controller.items
+                mTableView = editModel
+                column("ID", SubjectsEntryModel::subjectId)
+                column("Subject Name", SubjectsEntryModel::subjectName).makeEditable()
+                column("Code", SubjectsEntryModel::subjectCode).makeEditable()
+                column("Credits", SubjectsEntryModel::subjectCredits).makeEditable()
+                column("Hours Per Week", SubjectsEntryModel::hoursPerWeek).makeEditable()
 
+                onEditCommit {
+                    controller.update(it)
+                }
+                style{
+                    prefWidth = 1000.px
+                }
+            }
+
+            stackpane {
+                stackpaneConstraints {
+                    paddingTop = 30.0
+                    alignment = Pos.CENTER_RIGHT
+                }
+                rectangle {
+                    width = 500.0
+                    height = 150.0
+                    arcHeight = 100.0
+                    arcWidth = 100.0
+                    fill = Styles.borderLineColor
+                }
+                totalPriceLabel = label {
+                    if (totalPriceProperty.doubleValue() != 0.0) {
+                        bind(Bindings.concat("Total expenses: ", "R", Bindings.format("%.2f", totalPriceProperty)))
+                    } else {
+
+                    }
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 25.pt
+                        fontWeight = FontWeight.BOLD
+                    }
                 }
             }
         }
