@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
 
@@ -35,10 +36,24 @@ class AdminView : View("Admin Staff"), Searchable {
 
     override val root = borderpane {
         center = vbox {
+            vboxConstraints {
+                paddingTop = 30.0
+                paddingLeft = 80.0
+            }
+
+                label("Degree Students"){
+                    style {
+                        fontFamily = "Open Sans"
+                        fontSize = 40.pt
+                        fontWeight = FontWeight.BOLD
+                        paddingBottom = 50
+                    }
+                }
+
             form {
                 fieldset {
                     field("Name") {
-                        maxWidth = 220.0
+                        maxWidth = 400.0
                         textfield(model.adminName) {
                             this.required()
                             validator {
@@ -48,12 +63,24 @@ class AdminView : View("Admin Staff"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }
                 fieldset {
                     field("Surname") {
-                        maxWidth = 220.0
+                        maxWidth = 400.0
                         textfield(model.adminSurname) {
                             this.required()
                             validator {
@@ -63,13 +90,25 @@ class AdminView : View("Admin Staff"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.MEDIUM
                         }
                     }
                 }
 
                 fieldset {
-                    field("Student Number") {
-                        maxWidth = 220.0
+                    field("Role") {
+                        maxWidth = 400.0
                         textfield(model.adminRole) {
                             this.required()
                             validator {
@@ -79,6 +118,18 @@ class AdminView : View("Admin Staff"), Searchable {
                                     else -> null
                                 }
                             }
+                            style {
+                                padding = box(12.px)
+                                backgroundRadius += box(10.px)
+                                borderRadius += box(10.px)
+                                borderColor += box(Color.TRANSPARENT)
+                                backgroundColor += Color.WHITE
+                            }
+                        }
+                        style {
+                            fontFamily = "Open Sans"
+                            fontSize = 10.pt
+                            fontWeight = FontWeight.LIGHT
                         }
                     }
                 }

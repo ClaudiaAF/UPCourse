@@ -55,8 +55,7 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
             }
 
             form {
-                fieldset() {
-
+                fieldset {
                     field("Name") {
                         maxWidth = 400.0
                         textfield(model.degreeStudentName) {
@@ -108,7 +107,6 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
                             fontSize = 10.pt
                             fontWeight = FontWeight.MEDIUM
                         }
-
                     }
                 }
 
@@ -193,7 +191,6 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
                             fontSize = 10.pt
                             fontWeight = FontWeight.LIGHT
                         }
-
                     }
                 }
 
@@ -256,7 +253,7 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
 
                 }
 
-                spacing = 40.0
+                spacing = 20.0
             }
         }
 
@@ -267,8 +264,8 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
             }
 
             tableview<DegreeStudentsEntryModel> {
-
                 addClass(Styles.regularTable)
+
                 items = controller.items
                 mTableView = editModel
                 column("ID", DegreeStudentsEntryModel::degreeStudentId)
