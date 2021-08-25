@@ -6,8 +6,10 @@ import javafx.beans.property.SimpleStringProperty
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.transactions.transaction
 import tornadofx.*
 import java.math.BigDecimal
+import javax.swing.text.Position
 
 object LecturerStaffTbl : Table() {
     val lecturerId: Column<Int> = integer("lId").autoIncrement().primaryKey()
@@ -57,3 +59,4 @@ class LecturerEntryModel : ItemViewModel<LecturerEntry>() {
     var totalLecturerSalaryExpenses = itemProperty.select (LecturerEntry::totalLecturerSalaryExpenses)
 
 }
+

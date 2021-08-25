@@ -3,6 +3,7 @@ package com.example.demo.controller
 import com.example.demo.model.*
 import com.example.demo.util.execute
 import javafx.collections.ObservableList
+import javafx.scene.chart.PieChart
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll

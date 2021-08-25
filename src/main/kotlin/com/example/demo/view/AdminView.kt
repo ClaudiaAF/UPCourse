@@ -5,6 +5,7 @@ import com.example.demo.controller.DegreeStudentController
 import com.example.demo.model.AdminEntryModel
 import com.example.demo.model.DegreeStudentsEntryModel
 import com.example.demo.model.ExpensesEntryModel
+import com.example.demo.util.Searchable
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Insets
@@ -19,7 +20,7 @@ import javafx.scene.paint.Color
 import tornadofx.*
 import java.lang.Exception
 
-class AdminView : View("Admin Staff") {
+class AdminView : View("Admin Staff"), Searchable {
 
     var model = AdminEntryModel()
     val controller: AdminController by inject()
@@ -185,5 +186,9 @@ class AdminView : View("Admin Staff") {
         controller.add(model.adminName.value, model.adminSurname.value, model.adminRole.value, model.adminSalary.value.toDouble())
 
         updateTotalSalaries()
+    }
+
+    override fun onSearch(query: String) {
+        println("Searching for $query...")
     }
 }

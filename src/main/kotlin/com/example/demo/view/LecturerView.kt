@@ -3,28 +3,34 @@ package com.example.demo.view
 import com.example.demo.controller.LecturerController
 import com.example.demo.controller.SubjectsController
 import com.example.demo.model.LecturerEntryModel
+import com.example.demo.model.LecturerStaffTbl.lecturerSubject
 import com.example.demo.model.SubjectsEntryModel
+import com.example.demo.util.Searchable
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
+import javafx.collections.transformation.FilteredList
 import javafx.geometry.Pos
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.scene.text.Text
 import tornadofx.*
+import tornadofx.controlsfx.columnfilter
+import tornadofx.controlsfx.exceptValue
 import java.lang.Exception
 import javax.swing.ComboBoxModel
 
-class LecturerView : View("Lecturer Staff") {
+class LecturerView : View("Lecturer Staff"), Searchable {
 
     var model = LecturerEntryModel()
     var subjectModel = SubjectsEntryModel()
     val controller: LecturerController by inject()
     val subjectController: SubjectsController by inject()
     val boxObject = SimpleObjectProperty<SubjectsEntryModel>()
+
 
     var mTableView: TableViewEditModel<LecturerEntryModel> by singleAssign()
     var totalSalariesLabel: Label by singleAssign()
@@ -33,10 +39,13 @@ class LecturerView : View("Lecturer Staff") {
     init {
         updateTotalSalaries()
         subjectsList()
+
     }
 
     override val root = borderpane {
+
         center = vbox {
+
             form {
                 fieldset {
                     field("Name") {
@@ -90,11 +99,11 @@ class LecturerView : View("Lecturer Staff") {
                 }
 
                 combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+
                     cellFormat {
                         text = this.item.subjectName.value
                         bind(model.lecturerSubject)
                     }
-
                 }
 
                 hbox(10.0) {
@@ -129,6 +138,11 @@ class LecturerView : View("Lecturer Staff") {
 
                 }
                 fieldset {
+                    togglebutton ("Subjects"){
+                        action {
+                            text = if (isSelected) "On" else "off"
+                        }
+                    }
                     tableview<LecturerEntryModel> {
                         items = controller.items
                         mTableView = editModel
@@ -171,10 +185,12 @@ class LecturerView : View("Lecturer Staff") {
 
     private fun updateTotalSalaries() {
         var total = 0.0
+
         try {
             controller.items.forEach {
                 total += it.lecturerSalary.value.toDouble()
             }
+
             totalSalariesProperty.set(total)
             model.totalLecturerSalaryExpenses.value = total
 
@@ -187,5 +203,13 @@ class LecturerView : View("Lecturer Staff") {
         controller.add(model.lecturerName.value, model.lecturerSurname.value, model.lecturerSubject.value, model.lecturerSalary.value.toDouble())
 
         updateTotalSalaries()
+    }
+
+    val searchResult = mutableListOf<LecturerEntryModel>().observable()
+
+    override fun onSearch(query: String) {
+
+        println("Searching for $query...")
+
     }
 }

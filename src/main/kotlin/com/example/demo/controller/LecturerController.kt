@@ -2,8 +2,10 @@ package com.example.demo.controller
 
 import com.example.demo.model.*
 import com.example.demo.util.execute
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.collections.transformation.FilteredList
 import javafx.scene.chart.PieChart
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
@@ -25,14 +27,19 @@ class LecturerController : Controller() {
     var items: ObservableList<LecturerEntryModel> by singleAssign()
     var pieItemsData = FXCollections.observableArrayList<PieChart.Data>()
 
+
     init {
         items = listOfLecturers
-
 
     }
 
 
-    fun add(newLecturerName: String, newLecturerSurname: String, newLecturerSubject: String, newLecturerSalary: Double) : LecturerEntry {
+    fun add(
+        newLecturerName: String,
+        newLecturerSurname: String,
+        newLecturerSubject: String,
+        newLecturerSalary: Double
+    ): LecturerEntry {
         val newEntry = execute {
             LecturerStaffTbl.insert {
                 it[lecturerName] = newLecturerName
@@ -44,16 +51,28 @@ class LecturerController : Controller() {
 
         listOfLecturers.add(
             LecturerEntryModel().apply {
-                item = LecturerEntry(newEntry[LecturerStaffTbl.lecturerId], newLecturerName, newLecturerSurname, newLecturerSubject, newLecturerSalary)
+                item = LecturerEntry(
+                    newEntry[LecturerStaffTbl.lecturerId],
+                    newLecturerName,
+                    newLecturerSurname,
+                    newLecturerSubject,
+                    newLecturerSalary
+                )
             }
         )
 
-        return LecturerEntry(newEntry[LecturerStaffTbl.lecturerId], newLecturerName, newLecturerSurname, newLecturerSubject, newLecturerSalary)
+        return LecturerEntry(
+            newEntry[LecturerStaffTbl.lecturerId],
+            newLecturerName,
+            newLecturerSurname,
+            newLecturerSubject,
+            newLecturerSalary
+        )
     }
 
     fun update(updatedItem: LecturerEntryModel): Int {
         return execute {
-            LecturerStaffTbl.update ( { LecturerStaffTbl.lecturerId eq(updatedItem.lecturerId.value.toInt()) }) {
+            LecturerStaffTbl.update({ LecturerStaffTbl.lecturerId eq (updatedItem.lecturerId.value.toInt()) }) {
                 it[lecturerName] = updatedItem.lecturerName.value
                 it[lecturerSurname] = updatedItem.lecturerSurname.value
                 it[lecturerSubject] = updatedItem.lecturerSubject.value
@@ -70,5 +89,6 @@ class LecturerController : Controller() {
         }
         listOfLecturers.remove(model)
     }
+
 
 }

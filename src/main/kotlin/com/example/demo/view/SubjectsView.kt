@@ -7,6 +7,7 @@ import com.example.demo.model.AdminEntryModel
 import com.example.demo.model.DegreeStudentsEntryModel
 import com.example.demo.model.ExpensesEntryModel
 import com.example.demo.model.SubjectsEntryModel
+import com.example.demo.util.Searchable
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Insets
@@ -21,7 +22,7 @@ import javafx.scene.paint.Color
 import tornadofx.*
 import java.lang.Exception
 
-class SubjectsView : View("Subjects") {
+class SubjectsView : View("Subjects"), Searchable {
 
     var model = SubjectsEntryModel()
     val controller: SubjectsController by inject()
@@ -211,5 +212,9 @@ class SubjectsView : View("Subjects") {
         controller.add(model.subjectName.value, model.subjectCode.value, model.subjectCredits.value, model.hoursPerWeek.value, model.pricePerMonth.value.toDouble())
 
         updateTotalPrice()
+    }
+
+    override fun onSearch(query: String) {
+        println("Searching for $query...")
     }
 }

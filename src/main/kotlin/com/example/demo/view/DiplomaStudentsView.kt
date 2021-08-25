@@ -7,6 +7,7 @@ import com.example.demo.model.DegreeStudentsEntryModel
 import com.example.demo.model.DiplomaStudentsEntryModel
 import com.example.demo.model.ExpensesEntryModel
 import com.example.demo.model.SubjectsEntryModel
+import com.example.demo.util.Searchable
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -26,7 +27,7 @@ import org.slf4j.MDC.clear
 import tornadofx.*
 import java.lang.Exception
 
-class DiplomaStudentsView : View("Diploma Students") {
+class DiplomaStudentsView : View("Diploma Students"), Searchable {
 
     var model = DiplomaStudentsEntryModel()
     val controller: DiplomaStudentController by inject()
@@ -240,5 +241,9 @@ class DiplomaStudentsView : View("Diploma Students") {
         controller.add(model.diplomaStudentName.value, model.diplomaStudentSurname.value, model.diplomaStudentSubject.value, model.diplomaStudentNumber.value, model.diplomaStudentFees.value.toDouble())
 
         updateTotalFees()
+    }
+
+    override fun onSearch(query: String) {
+        println("Searching for $query...")
     }
 }

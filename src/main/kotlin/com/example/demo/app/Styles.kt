@@ -9,6 +9,8 @@ import tornadofx.*
 import java.awt.Transparency
 
 class Styles : Stylesheet() {
+
+
     companion object {
         // Containers
         val rowWrapper by cssclass()
@@ -44,8 +46,10 @@ class Styles : Stylesheet() {
         val darkBackgroundColor = c("#f5f5f5")
         val linkColor = c("#4078c0")
         val contrastColor = c("#d26911")
-        val borderLineColor = c("#e5e5e5")
-        val darkTextColor = c("#666")
+        val borderLineColor = c("#ED960B")
+        val darkTextColor = c("#262125")
+        val offWhite = c("F0F0ED")
+        val bloodRed = c("CB0000")
 
         // Buttons
         val successButton by cssclass()
@@ -81,10 +85,10 @@ class Styles : Stylesheet() {
         val locationIcon by cssclass()
         val linkIcon by cssclass()
         val clockIcon by cssclass()
-
         //Text
         val regularText by cssclass()
         val titleText by cssclass()
+//        val SFPro = loadFont("/font/SFPro.otf", 14.0)!!
     }
 
     init {
@@ -93,6 +97,7 @@ class Styles : Stylesheet() {
             unsafe("-fx-faint-focus-color", raw("transparent"))
             unsafe("-fx-text-background-color", raw("ladder( -fx-background, -fx-dark-text-color 46%, -fx-dark-text-color 59%, -fx-mid-text-color 60% )"))
         }
+
 
         rowWrapper {
             alignment = Pos.CENTER
@@ -309,24 +314,23 @@ class Styles : Stylesheet() {
         tabPane {
             prefWidth = pageWidth
             tabHeaderBackground {
-                backgroundColor += lightBackgroundColor
-                borderColor += box(Color.TRANSPARENT, Color.TRANSPARENT, borderLineColor, Color.TRANSPARENT)
+                backgroundColor += Color.TRANSPARENT
+                borderColor += box(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT)
             }
             tab {
                 backgroundColor += Color.TRANSPARENT
                 textFill = darkTextColor
-                padding = box(7.px, 11.px)
+                fontFamily = "Open Sans"
+                fontWeight = FontWeight.BOLD
+                padding = box(17.px, 21.px)
+                borderRadius += box(15.px, 15.px, 15.px, 15.px)
+
             }
             tab and selected {
-                backgroundColor += Color.WHITE
-                borderColor += box(contrastColor, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT)
-                borderColor += box(Color.TRANSPARENT, borderLineColor)
-                borderColor += box(Color.TRANSPARENT)
-                borderWidth += box(3.px)
-                borderWidth += box(1.px)
-                borderWidth += box(1.px)
-                borderRadius += box(3.px, 3.px, 0.px, 0.px)
+                backgroundColor += borderLineColor
+                borderRadius += box(15.px, 15.px, 15.px, 15.px)
                 focusColor = Color.TRANSPARENT
+                textFill = Color.WHITE
                 faintFocusColor = Color.TRANSPARENT
             }
         }
@@ -361,27 +365,58 @@ class Styles : Stylesheet() {
 
         //Table
         regularTable {
-            borderWidth += box(50.pt)
+            borderColor += box(Color.TRANSPARENT)
+            borderWidth += box(2.pt)
+            backgroundColor += lightBackgroundColor
+            backgroundRadius += box(20.px)
+            borderRadius += box(20.px)
+            padding = box(15.px, 15.px)
+            prefWidth = 400.px
 
             tableCell {
+                textFill = darkTextColor
+                borderColor += box(Color.TRANSPARENT)
                 alignment = Pos.CENTER
+                padding = box(15.px, 15.px)
 
                 and(empty) {
-                    borderWidth += box(20.pt)
+                    borderWidth += box(0.pt)
+                    backgroundRadius += box(20.px)
+                    borderRadius += box(20.px)
                 }
             }
 
             tableColumn {
                 label {
+                    backgroundColor += borderLineColor
+                    textFill = Color.WHITE
                     fontSize = 12.pt
+                    padding = box(15.px, 15.px)
                 }
             }
 
             tableRowCell {
+                backgroundColor += lightBackgroundColor
+                and(selected) {
+                    backgroundColor += Color.TRANSPARENT
+                    borderColor += box(borderLineColor)
+                    textFill = Color.WHITE
+                    backgroundRadius += box(20.px)
+                    borderRadius += box(20.px)
+                }
+                and(editable) {
+                    backgroundColor += borderLineColor
+                    textFill = Color.WHITE
+                    backgroundRadius += box(20.px)
+                    borderRadius += box(20.px)
+                }
             }
 
             scrollBar {
-                backgroundColor += Color.DIMGREY
+                backgroundColor += borderLineColor
+                borderRadius += box(10.px)
+                backgroundRadius += box(10.px)
+                padding = box(15.px, 15.px)
             }
         }
 
@@ -483,13 +518,18 @@ class Styles : Stylesheet() {
         //Text
 
         titleText {
-            textFill = Color.WHITE
+            textFill = darkTextColor
             fontSize = 20.pt
+            fontFamily = "SF Pro Text"
+            fontWeight = FontWeight.BOLD
+//            font = SFPro
         }
 
         regularText {
-            textFill = Color.WHITE
+            textFill = darkTextColor
             fontSize = 14.pt
+            padding = box(25.px)
+            fontFamily = "SF Pro Text"
         }
 
     }
