@@ -20,7 +20,7 @@ import javafx.scene.text.FontWeight
 import javafx.util.Duration
 import tornadofx.*
 
-class MainView : View("User Screen") {
+class MainView : View("Welcome") {
     val controller: TotalAmountsController by inject()
     var logoIcon: Label by singleAssign()
 
@@ -83,8 +83,13 @@ class MainView : View("User Screen") {
                 }
             }
 
-            padding = Insets(10.0, 0.0, 10.0, 50.0)
+            padding = Insets(10.0, 200.0, 10.0, 150.0)
             spacing = 15.0
+        }
+
+        imageview("https://drive.google.com/uc?export=view&id=1N2NB12NL1G7vDKw-6S2nhOn10mYsmdUs"){
+            fitHeight = 710.0
+            fitWidth = 663.0
         }
 
     } //main hbox
