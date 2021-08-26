@@ -23,6 +23,7 @@ import tornadofx.*
 import tornadofx.controlsfx.columnfilter
 import tornadofx.controlsfx.exceptValue
 import java.lang.Exception
+import java.net.URI
 import javax.swing.ComboBoxModel
 
 class LecturerView : View("Lecturer Staff"), Searchable {
@@ -45,6 +46,9 @@ class LecturerView : View("Lecturer Staff"), Searchable {
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1Qbgijg9Er2K8YTeyBL2zHU_TMgOID_N0")
+        }
 
         center = vbox {
             vboxConstraints {
@@ -145,7 +149,7 @@ class LecturerView : View("Lecturer Staff"), Searchable {
                     field("Salary") {
                         maxWidth = 220.0
                         textfield(model.lecturerSalary) {
-                            setText("350")
+                            setText("135 000")
                             isEditable = false
 
                             style {

@@ -20,6 +20,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
+import java.net.URI
 
 class AdminView : View("Admin Staff"), Searchable {
 
@@ -35,6 +36,9 @@ class AdminView : View("Admin Staff"), Searchable {
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1Qbgijg9Er2K8YTeyBL2zHU_TMgOID_N0")
+        }
         center = vbox {
             vboxConstraints {
                 paddingTop = 30.0
@@ -138,7 +142,7 @@ class AdminView : View("Admin Staff"), Searchable {
                     field("Salary") {
                         maxWidth = 300.0
                         textfield(model.adminSalary) {
-                            setText("350")
+                            setText("15 000")
                             isEditable = false
 
                             style {

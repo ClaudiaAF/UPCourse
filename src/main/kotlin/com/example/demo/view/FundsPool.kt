@@ -17,6 +17,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
+import java.net.URI
 import javax.xml.soap.Text
 
 class FundsPool : View ("Funds Pool") {
@@ -66,6 +67,9 @@ class FundsPool : View ("Funds Pool") {
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1lPUw_VVJTSkvIkKu5m1GJn-_0fS8YVif")
+        }
 
         top = vbox {
             vboxConstraints {
@@ -78,7 +82,9 @@ class FundsPool : View ("Funds Pool") {
                     fontFamily = "Open Sans"
                     fontSize = 40.pt
                     fontWeight = FontWeight.BOLD
-                    paddingBottom = 50
+                    paddingBottom = 20
+                    paddingTop = 50
+                    paddingLeft = 50
                 }
             }
 
@@ -115,7 +121,6 @@ class FundsPool : View ("Funds Pool") {
                 }
 
             }
-
             hbox {
                 hboxConstraints {
                     alignment = Pos.CENTER

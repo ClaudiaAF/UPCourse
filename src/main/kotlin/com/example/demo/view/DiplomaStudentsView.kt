@@ -27,6 +27,7 @@ import javafx.scene.text.FontWeight
 import org.slf4j.MDC.clear
 import tornadofx.*
 import java.lang.Exception
+import java.net.URI
 
 class DiplomaStudentsView : View("Diploma Students"), Searchable {
 
@@ -45,6 +46,9 @@ class DiplomaStudentsView : View("Diploma Students"), Searchable {
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1Qbgijg9Er2K8YTeyBL2zHU_TMgOID_N0")
+        }
         center = vbox {
             vboxConstraints {
                 paddingTop = 30.0
@@ -137,13 +141,13 @@ class DiplomaStudentsView : View("Diploma Students"), Searchable {
                             cellFormat {
                                 bind(model.diplomaStudentSubject)
                                 text = this.item.subjectName.value
-//                                if (item.subjectCredits < 20) {
-//
-//                                        error("Please choose a Diploma Subject")
-//
-//                                } else {
-//                                    //do nothing
-//                                }
+                                if (item.subjectCredits >60) {
+
+                                        error("Please choose a Diploma Subject")
+
+                                } else {
+                                    //do nothing
+                                }
                             }
                             style {
                                 padding = box(12.px)

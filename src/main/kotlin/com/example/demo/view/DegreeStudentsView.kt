@@ -13,6 +13,7 @@ import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
+import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
@@ -22,6 +23,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
+import java.net.URI
 
 class DegreeStudentsView : View("Degree Students"), Searchable {
 
@@ -34,12 +36,17 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
     var mTableView: TableViewEditModel<DegreeStudentsEntryModel> by singleAssign()
     var totalFeesLabel: Label by singleAssign()
     val totalFeesProperty = SimpleDoubleProperty(0.0)
+    var mComboBox: ComboBox<SubjectsEntryModel> by singleAssign()
 
     init {
         updateTotalFees()
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1Qbgijg9Er2K8YTeyBL2zHU_TMgOID_N0")
+        }
+
         center = vbox {
             vboxConstraints {
                 paddingTop = 30.0
@@ -114,17 +121,16 @@ class DegreeStudentsView : View("Degree Students"), Searchable {
                     fieldset {
                         field {
                             text = "Subject"
-                            combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+                            val myBox = combobox<SubjectsEntryModel>(boxObject, values = subjectController.listOfSubjects) {
+
                                 cellFormat {
                                     text = this.item.subjectName.value
                                     bind(model.degreeStudentSubject)
-//                                    if (item.subjectCredits > 20) {
-//
-//                                        error("Please choose a Degree Subject")
-//
-//                                    } else {
-//                                        //do nothing
-//                                    }
+
+                                    if (item.subjectCredits < 60) {
+                                        error("Please select a Degree Subject")
+                                    } else {
+                                    }
                                 }
                                 style {
                                     padding = box(12.px)

@@ -22,6 +22,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 import java.lang.Exception
+import java.net.URI
 
 class SubjectsView : View("Subjects"), Searchable {
 
@@ -37,6 +38,9 @@ class SubjectsView : View("Subjects"), Searchable {
     }
 
     override val root = borderpane {
+        style{
+            backgroundImage += URI("https://drive.google.com/uc?export=view&id=1Qbgijg9Er2K8YTeyBL2zHU_TMgOID_N0")
+        }
         center = vbox {
             vboxConstraints {
                 paddingTop = 30.0
@@ -115,8 +119,8 @@ class SubjectsView : View("Subjects"), Searchable {
                             this.required()
                             validator {
                                 when {
-                                    it.isNullOrEmpty() -> error("field cannot be empty")
-                                    it!!.length > 2 -> error("Must be 2 Numbers")
+                                    it.isNullOrEmpty() -> error("Field cannot be empty")
+                                    it!!.length > 4 -> error("Too Many Numbers")
                                     else -> null
                                 }
                             }
@@ -134,19 +138,20 @@ class SubjectsView : View("Subjects"), Searchable {
                             fontWeight = FontWeight.LIGHT
                         }
                     }
+                    text("60 (diploma) or 180 (degree)"){
+                        style {
+                            fontFamily = "Open Sans"
+                            opacity = 0.5
+                        }
+                    }
                 }
                 fieldset {
                     field("Hours/Week") {
                         maxWidth = 220.0
                         textfield(model.hoursPerWeek) {
-                            this.required()
-                            validator {
-                                when {
-                                    it.isNullOrEmpty() -> error("field cannot be empty")
-                                    it!!.length < 2 -> error("too short")
-                                    else -> null
-                                }
-                            }
+                            setText("60")
+                            isEditable = false
+
                             style {
                                 padding = box(12.px)
                                 backgroundRadius += box(10.px)
